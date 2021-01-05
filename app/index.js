@@ -4,7 +4,7 @@ import clock from "clock";
 import { zeroPad, } from "../common/utils"; // import user function zeroPad (see lines 38, 40, 41)
 import { me as appbit } from "appbit";
 import { today } from "user-activity";
-
+import { minuteHistory} from "user-activity";
 
 let image = document.getElementById('image');
 let hungerLabel = document.getElementById('hunger');
@@ -31,6 +31,7 @@ var saveState = {
 if (appbit.permissions.granted("access_activity")) {
     //update the user's wallet with steps.
     saveState.data.wallet += today.adjusted.steps;
+    console.log(minuteHistory[0]);
     
 };
 
