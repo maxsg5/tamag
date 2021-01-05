@@ -1,17 +1,10 @@
 import document from "document";
 import * as fs from "fs";
 import clock from "clock";
-import { zeroPad, } from "../common/utils"; // import user function zeroPad (see lines 38, 40, 41)
 import { me as appbit } from "appbit";
 import { today } from "user-activity";
-import { minuteHistory } from "user-activity";
 
-// // Disable app timeout
-if (appbit.appTimeoutEnabled) {
-    console.log("Timeout is enabled");
-}
 
-//appbit.appTimeoutEnabled = false; // Disable timeout
 
 let myButton = document.getElementById("myButton");
 let image = document.getElementById('image');
@@ -21,12 +14,10 @@ let walletLabel = document.getElementById('wallet');
 let btnLabel = document.getElementById('btnLbl');
 
 var lastSaveTime;
-
 var currentAnimation = 'sit';
 var animationSpeed = 200;
 var animationFrame = 1;
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 //initial game start data.
 var saveState = {
     "data": {
@@ -37,7 +28,7 @@ var saveState = {
         "dieLoop": 0
     }
 };
-btnLabel.text = "play";
+
 //check how many steps the user has taken.
 if (appbit.permissions.granted("access_activity")) {
     //update the user's wallet with steps.
@@ -45,6 +36,11 @@ if (appbit.permissions.granted("access_activity")) {
     //console.log(minuteHistory[0]);
 
 };
+// Disable app timeout
+if (appbit.appTimeoutEnabled) {
+    console.log("Timeout is enabled");
+}
+//appbit.appTimeoutEnabled = false; // Disable timeout
 
 //check if there is saved data.
 if (fs.existsSync("/private/data/save.txt")) {
@@ -64,8 +60,14 @@ else {
 
 clock.granularity = "seconds"; // seconds, minutes, hours
 
+//initialize UI
+btnLabel.text = "play";
+
 //animate the pet.
 setInterval(swapImageAnimator, animationSpeed);
+
+//event listeners
+//button event.
 myButton.addEventListener("mousemove", (evt) => {
     console.log(`Mouse moved - x: ${evt.screenX}, y: ${evt.screenY}`);
   });
@@ -92,7 +94,7 @@ clock.addEventListener("tick", (evt) => {
 
     }
 
-    //every 30 min the pet looses 1 hunger.
+    //if 3000 min past the pet looses all hunger.
     if (lastSaveTime >= 3000) {
         saveState.data.hunger = 0;
         //update the current save state time.
@@ -102,6 +104,7 @@ clock.addEventListener("tick", (evt) => {
 
     }
 
+    //if the pet is dead display dead animation.
     if( saveState.data.health <= 0){
         currentAnimation = 'dead';
         return;
@@ -112,6 +115,7 @@ clock.addEventListener("tick", (evt) => {
         
         if (saveState.data.dieLoop === 0) {
             saveState.data.dieLoop = new Date();
+
             //update the current save state time.
             saveState.data.timeStamp = new Date();
             //update current save state.
@@ -132,7 +136,7 @@ clock.addEventListener("tick", (evt) => {
             //update current save state.
             fs.writeFileSync("save.txt", saveState, "json");
         }
-        //currentAnimation = 'dead';
+       
     }
     console.log("time since last save " + lastSaveTime + " Min");
 
@@ -171,8 +175,6 @@ function swapImageAnimator() {
 
 
 function sitAnimation() {
-
-
     switch (animationFrame) {
         case 1:
             image.href = "../resources/petImages/tile000.png";
@@ -192,8 +194,6 @@ function sitAnimation() {
 }
 
 function deadAnimation() {
-
-
     switch (animationFrame) {
         case 1:
             image.href = "../resources/petImages/dead.png";
@@ -204,17 +204,13 @@ function deadAnimation() {
             animationFrame = 2;
             break;
         case 2:
-            //image.href = "../resources/petImages/tile001.png";
             image.y = image.y - 5;
             animationFrame = 3;
             break;
         case 3:
-            //image.href = "../resources/petImages/tile002.png";
             image.y = image.y + 5;
             animationFrame = 1;
             break;
-
-
     }
 }
 
