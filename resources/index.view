@@ -4,4 +4,7 @@
   <text id="health" />
   <text id="wallet" />
   <image id="image" x="25%" y="30%" width="50%" height="50%" href="" />
+  <text id="btnLbl" />
+  <rect id="myButton" x="41%" y="85%" width="20%" height="10%"
+  fill="red" pointer-events="visible"  />
 </svg>

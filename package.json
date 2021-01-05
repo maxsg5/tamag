@@ -4,16 +4,18 @@
   "private": true,
   "license": "UNLICENSED",
   "devDependencies": {
-    "@fitbit/sdk": "~5.0.1",
+    "@fitbit/sdk": "^5.0.1",
     "@fitbit/sdk-cli": "^1.7.3"
   },
   "fitbit": {
-    "appUUID": "7cb94c02-5176-4500-ba83-be0eab221b5b",
+    "appUUID": "4264e70a-6876-4ca5-8e6d-a94075806bf4",
     "appType": "app",
     "appDisplayName": "Tamag",
     "iconFile": "resources/icon.png",
     "wipeColor": "#ffffff",
-    "requestedPermissions": ["access_activity"],
+    "requestedPermissions": [
+      "access_activity"
+    ],
     "buildTargets": [
       "atlas",
       "vulcan"

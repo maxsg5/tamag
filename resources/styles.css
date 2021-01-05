@@ -37,3 +37,12 @@
   y: 25%;
   fill: cornflowerblue;
 }
+#btnLbl {
+  font-size: 15;
+  font-family: System-Bold;
+  text-length: 32;
+  text-anchor: start;
+  x: 41%;
+  y: 95%;
+  fill: cornflowerblue;
+}
