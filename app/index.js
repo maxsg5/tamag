@@ -71,12 +71,14 @@ clock.addEventListener("tick", (evt) => {
     //every 30 min the pet looses 1 hunger.
     if(lastSaveTime >= 30){
         saveState.data.hunger -= 1;
+        //update the current save state time.
         saveState.data.timeStamp = new Date();
+        //update current save state.
         fs.writeFileSync("save.txt", saveState, "json");
 
     }
     console.log("time since last save " + lastSaveTime +" Min");
-    //update current save state.
+    
     
 
     
