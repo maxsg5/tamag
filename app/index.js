@@ -6,12 +6,14 @@ import { today } from "user-activity";
 
 
 
-let myButton = document.getElementById("myButton");
+
 let image = document.getElementById('image');
 let hungerLabel = document.getElementById('hunger');
 let healthLabel = document.getElementById('health');
 let walletLabel = document.getElementById('wallet');
-let btnLabel = document.getElementById('btnLbl');
+let cookieLabel = document.getElementById('cookies');
+
+let feedPetButton = document.getElementById('button-4');
 
 var lastSaveTime;
 var currentAnimation = 'sit';
@@ -23,9 +25,11 @@ var saveState = {
     "data": {
         "hunger": 0,
         "wallet": 0,
-        "health": 1,
-        "timeStamp": new Date(),
-        "dieLoop": 0
+        "health": 50,
+        "saveTimer": new Date(),
+        "fullTimer": null,
+        "dieLoop": 0,
+        "cookies": 10
     }
 };
 
@@ -46,10 +50,10 @@ if (appbit.appTimeoutEnabled) {
 if (fs.existsSync("/private/data/save.txt")) {
     //load any saved data to variables.
     saveState = fs.readFileSync("save.txt", "json");
-    console.log("saved data: Hunger:" + saveState.data.hunger + ", Wallet:" + saveState.data.wallet + ", health:" + saveState.data.health + ", TimeStamp:" + saveState.data.timeStamp);
+    console.log("saved data: Hunger:" + saveState.data.hunger + ", Wallet:" + saveState.data.wallet + ", health:" + saveState.data.health + ", TimeStamp:" + saveState.data.saveTimer);
 
 
-    console.log("time since last save " + checkDate(new Date(saveState.data.timeStamp)) * -1 + " Min");
+    console.log("time since last save " + checkDate(new Date(saveState.data.saveTimer)) * -1 + " Min");
 }
 //if there is no saved data. We must start a new game.
 else {
@@ -61,16 +65,24 @@ else {
 clock.granularity = "seconds"; // seconds, minutes, hours
 
 //initialize UI
-btnLabel.text = "play";
+
 
 //animate the pet.
 setInterval(swapImageAnimator, animationSpeed);
 
 //event listeners
 //button event.
-myButton.addEventListener("mousemove", (evt) => {
-    console.log(`Mouse moved - x: ${evt.screenX}, y: ${evt.screenY}`);
-  });
+feedPetButton.addEventListener("click", (evt) => {
+    console.log("Feed Pet.");
+
+    if(saveState.data.cookies > 0 && saveState.data.hunger < 100){
+        saveState.data.cookies -= 1;
+        saveState.data.hunger += 10;
+    }
+    else{
+        console.log("out of cookies...")
+    }
+  })
 //happens when the clock ticks every second.
 clock.addEventListener("tick", (evt) => {
 
@@ -79,16 +91,31 @@ clock.addEventListener("tick", (evt) => {
     hungerLabel.text = "Hunger:" + saveState.data.hunger;
     healthLabel.text = "Health:" + saveState.data.health;
     walletLabel.text = "Wallet:" + saveState.data.wallet;
+    cookieLabel.text = "Cookies:" + saveState.data.cookies;
 
     // represents how many minutes have passed since the last save.
-    lastSaveTime = checkDate(new Date(saveState.data.timeStamp)) * -1;
+    lastSaveTime = checkDate(new Date(saveState.data.saveTimer)) * -1;
 
+    //if pet is not hungry rest dieLoop to zero.
+    if(saveState.data.hunger > 0){
+        saveState.data.dieLoop = 0;
+    }
+    
+    if(saveState.data.hunger == 100){
+        if(lastSaveTime >= 1 && saveState.data.health < 100){
+            saveState.data.health += 1;
+            //update the current save state time.
+            saveState.data.saveTimer = new Date();
+            //update current save state.
+            fs.writeFileSync("save.txt", saveState, "json");
+        }
+    }
 
     //every 30 min the pet looses 1 hunger.
     if (lastSaveTime >= 30) {
         saveState.data.hunger -= 1;
         //update the current save state time.
-        saveState.data.timeStamp = new Date();
+        saveState.data.saveTimer = new Date();
         //update current save state.
         fs.writeFileSync("save.txt", saveState, "json");
 
@@ -98,7 +125,7 @@ clock.addEventListener("tick", (evt) => {
     if (lastSaveTime >= 3000) {
         saveState.data.hunger = 0;
         //update the current save state time.
-        saveState.data.timeStamp = new Date();
+        saveState.data.saveTimer = new Date();
         //update current save state.
         fs.writeFileSync("save.txt", saveState, "json");
 
@@ -111,45 +138,28 @@ clock.addEventListener("tick", (evt) => {
     }
 
     //if pet runs out of hunger health drops every min
-    if (saveState.data.hunger <= 0) {
+    if (saveState.data.hunger <= 0 && lastSaveTime >= 1) {
+        //console.log(saveState.data.dieLoop);
         
-        if (saveState.data.dieLoop === 0) {
-            saveState.data.dieLoop = new Date();
-
-            //update the current save state time.
-            saveState.data.timeStamp = new Date();
-            //update current save state.
-            fs.writeFileSync("save.txt", saveState, "json");
-        }
-        let dieLoopTime = checkDate(saveState.data.dieLoop) * -1;
-        console.log(dieLoopTime);
-        console.log(saveState.data.dieLoop);
-
-        if (dieLoopTime >= 1) {
-            saveState.data.dieLoop = new Date();
-
-            console.log('ouch');
+        // if (saveState.data.dieLoop === 0) {
+        //     saveState.data.dieLoop = new Date();
 
             saveState.data.health -= 1
-
-            //saveState.data.timeStamp = new Date();
+            //update the current save state time.
+            saveState.data.saveTimer = new Date();
             //update current save state.
             fs.writeFileSync("save.txt", saveState, "json");
-        }
+        
+        
        
     }
     console.log("time since last save " + lastSaveTime + " Min");
-
-
-
-
-
 });
 
 function checkDate(date) {
     var today = new Date();
     var lastDate = date;
-    var diffMs = (lastDate - today); // milliseconds between now & Christmas
+    var diffMs = (lastDate - today); // milliseconds between now & last date.
     var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
     //var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
     return diffMins;

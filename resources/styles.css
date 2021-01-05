@@ -37,12 +37,26 @@
   y: 25%;
   fill: cornflowerblue;
 }
-#btnLbl {
+#button-1 {
+  
+}
+#button-4 {
+  fill: cornflowerblue;
+
+  x: 260;
+  y: 50;
+}
+.plus-button #image {
+  href: "../resources/petImages/cookie.png";
+  height: 18;
+  width: 18;
+}
+#cookies {
   font-size: 15;
   font-family: System-Bold;
   text-length: 32;
   text-anchor: start;
-  x: 41%;
-  y: 95%;
+  x: 260;
+  y: 30%;
   fill: cornflowerblue;
 }
