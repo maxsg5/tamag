@@ -1,0 +1,7 @@
+<svg>
+  <rect id="background" />
+  <text id="hunger" />
+  <text id="health" />
+  <text id="wallet" />
+  <image id="image" x="25%" y="30%" width="50%" height="50%" href="" />
+</svg>
