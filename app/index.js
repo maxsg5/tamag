@@ -25,9 +25,9 @@ var animationFrame = 1;
 //initial game start data.
 var saveState = {
     "data": {
-        "hunger": 1,
+        "hunger": 0,
         "wallet": 0,
-        "health": 2,
+        "health": 100,
         "saveTimer": new Date(),
         "hungerTimer":new Date(),
         "fullTimer": null,
@@ -79,6 +79,9 @@ feedPetButton.addEventListener("click", (evt) => {
     if(saveState.data.cookies > 0 && saveState.data.hunger > 0){
         saveState.data.cookies -= 1;
         saveState.data.hunger -= 10;
+        if(saveState.data.hunger < 0){
+            saveState.data.hunger = 0;
+        }
     }
     else{
         console.log("out of cookies...")
