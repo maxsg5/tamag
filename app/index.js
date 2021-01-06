@@ -76,9 +76,9 @@ setInterval(swapImageAnimator, animationSpeed);
 feedPetButton.addEventListener("click", (evt) => {
     console.log("Feed Pet.");
 
-    if(saveState.data.cookies > 0 && saveState.data.hunger < 100){
+    if(saveState.data.cookies > 0 && saveState.data.hunger > 0){
         saveState.data.cookies -= 1;
-        saveState.data.hunger += 10;
+        saveState.data.hunger -= 10;
     }
     else{
         console.log("out of cookies...")
@@ -105,8 +105,8 @@ clock.addEventListener("tick", (evt) => {
         saveState.data.dieLoop = 0;
     }
     
-    //if pet's full
-    if(saveState.data.hunger == 100){
+    //hunger is 0, pet is full -> health goes up
+    if(saveState.data.hunger == 0){
         if(lastSaveTime >= 1 && saveState.data.health < 100){
             saveState.data.health +=  1;
             //update the current save state time.
@@ -116,18 +116,18 @@ clock.addEventListener("tick", (evt) => {
         }
     }
 
-    //every 30 min the pet looses 1 hunger.
-    if (hungerTime >= 1 && saveState.data.hunger > 0) {
-        saveState.data.hunger -= 1;
+    //every 30 min the pet gains 1 hunger (becomes hungrier)
+    if (hungerTime >= 1 && saveState.data.hunger < 100) {
+        saveState.data.hunger += 1;
         //update the current save state time.
         saveState.data.hungerTimer = new Date();
         
 
     }
 
-    //if 3000 min past the pet looses all hunger.
+    //if 3000 min past the pet is starving!
     if (lastSaveTime >= 3000) {
-        saveState.data.hunger = 0;
+        saveState.data.hunger = 100;
         //update the current save state time.
         saveState.data.saveTimer = new Date();
         //update current save state.
@@ -147,7 +147,7 @@ clock.addEventListener("tick", (evt) => {
     }
 
     //if pet runs out of hunger health drops every min
-    if (saveState.data.hunger <= 0 && dieTime >= 1) {
+    if (saveState.data.hunger == 100 && dieTime >= 1) {
         
 
             saveState.data.health -= 1;
