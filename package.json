@@ -8,7 +8,7 @@
     "@fitbit/sdk-cli": "^1.7.3"
   },
   "fitbit": {
-    "appUUID": "4264e70a-6876-4ca5-8e6d-a94075806bf4",
+    "appUUID": "e24a1925-f761-4f4c-945a-ce447fa343e9",
     "appType": "app",
     "appDisplayName": "Tamag",
     "iconFile": "resources/icon.png",

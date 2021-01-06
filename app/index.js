@@ -105,9 +105,10 @@ clock.addEventListener("tick", (evt) => {
         saveState.data.dieLoop = 0;
     }
     
+    //if pet's full
     if(saveState.data.hunger == 100){
         if(lastSaveTime >= 1 && saveState.data.health < 100){
-            saveState.data.health += 1;
+            saveState.data.health +=  1;
             //update the current save state time.
             saveState.data.saveTimer = new Date();
             //update current save state.
