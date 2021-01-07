@@ -4,6 +4,9 @@ import clock from "clock";
 import { me as appbit } from "appbit";
 import { today } from "user-activity";
 
+import { outbox } from "file-transfer";
+
+
 
 
 
@@ -29,7 +32,7 @@ var saveState = {
         "wallet": 0,
         "health": 100,
         "saveTimer": new Date(),
-        "hungerTimer":new Date(),
+        "hungerTimer": new Date(),
         "fullTimer": null,
         "dieLoop": new Date(),
         "cookies": 10
@@ -76,17 +79,17 @@ setInterval(swapImageAnimator, animationSpeed);
 feedPetButton.addEventListener("click", (evt) => {
     console.log("Feed Pet.");
 
-    if(saveState.data.cookies > 0 && saveState.data.hunger > 0){
+    if (saveState.data.cookies > 0 && saveState.data.hunger > 0) {
         saveState.data.cookies -= 1;
         saveState.data.hunger -= 10;
-        if(saveState.data.hunger < 0){
+        if (saveState.data.hunger < 0) {
             saveState.data.hunger = 0;
         }
     }
-    else{
+    else {
         console.log("out of cookies...")
     }
-  })
+})
 //happens when the clock ticks every second.
 clock.addEventListener("tick", (evt) => {
 
@@ -104,14 +107,14 @@ clock.addEventListener("tick", (evt) => {
 
 
     //if pet is not hungry rest dieLoop to zero.
-    if(saveState.data.hunger > 0){
+    if (saveState.data.hunger > 0) {
         saveState.data.dieLoop = 0;
     }
-    
+
     //hunger is 0, pet is full -> health goes up
-    if(saveState.data.hunger == 0){
-        if(lastSaveTime >= 1 && saveState.data.health < 100){
-            saveState.data.health +=  1;
+    if (saveState.data.hunger == 0) {
+        if (lastSaveTime >= 1 && saveState.data.health < 100) {
+            saveState.data.health += 1;
             //update the current save state time.
             saveState.data.saveTimer = new Date();
             //update current save state.
@@ -124,7 +127,7 @@ clock.addEventListener("tick", (evt) => {
         saveState.data.hunger += 1;
         //update the current save state time.
         saveState.data.hungerTimer = new Date();
-        
+
 
     }
 
@@ -139,7 +142,7 @@ clock.addEventListener("tick", (evt) => {
     }
 
     //if the pet is dead display dead animation.
-    if( saveState.data.health <= 0){
+    if (saveState.data.health <= 0) {
         currentAnimation = 'dead';
         feedPetButton.style.display = "none";
         healthLabel.style.display = 'none';
@@ -151,16 +154,16 @@ clock.addEventListener("tick", (evt) => {
 
     //if pet runs out of hunger health drops every min
     if (saveState.data.hunger == 100 && dieTime >= 1) {
-        
 
-            saveState.data.health -= 1;
-            //update the current save state time.
-            saveState.data.dieLoop = new Date();
-       
+
+        saveState.data.health -= 1;
+        //update the current save state time.
+        saveState.data.dieLoop = new Date();
+
     }
     //update current save state.
     fs.writeFileSync("save.txt", saveState, "json");
-    console.log("time since last hunger removed " + hungerTime + " Min");
+    console.log("time since last hunger added " + hungerTime + " Min");
 });
 
 function checkDate(date) {
@@ -231,4 +234,17 @@ function deadAnimation() {
     }
 }
 
+//user is closing the app.
+appbit.onunload = () => {
 
+    console.log("App is being unloaded");
+    outbox
+  .enqueueFile("/private/data/save.txt")
+  .then(ft => {
+    console.log(`Transfer of ${ft.name} successfully queued.`);
+  })
+  .catch(err => {
+    console.log(`Failed to schedule transfer: ${err}`);
+  })
+
+}
