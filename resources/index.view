@@ -4,9 +4,13 @@
   <text id="health" />
   <text id="wallet" />
   <text id="cookies" />
+  <rect id="healthBar" class="info-bar" fill="fb-red" />
 
   <image id="image" x="25%" y="30%" width="50%" height="50%" href="" />
   
   <!-- <use id="button-1" href="#text-button" class="text-button bottom application-fill" /> -->
+  <use id="button-5" href="#icon-button" class="small-button application-fill " />
+  <use id="button-6" href="#icon-button" class="small-button application-fill " />
+ 
   <use id="button-4" href="#icon-button" class="small-button application-fill plus-button" />
 </svg>

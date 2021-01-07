@@ -3,7 +3,6 @@ import * as fs from "fs";
 import clock from "clock";
 import { me as appbit } from "appbit";
 import { today } from "user-activity";
-
 import { outbox } from "file-transfer";
 
 
@@ -15,12 +14,17 @@ let hungerLabel = document.getElementById('hunger');
 let healthLabel = document.getElementById('health');
 let walletLabel = document.getElementById('wallet');
 let cookieLabel = document.getElementById('cookies');
-
 let feedPetButton = document.getElementById('button-4');
+let devButton = document.getElementById('button-5');
+let devButton2 = document.getElementById('button-6');
+
+
+let healthBar = document.getElementById('healthBar');
 
 var lastSaveTime;
 var hungerTime;
 var dieTime;
+var currentPet = 'turtle';
 var currentAnimation = 'sit';
 var animationSpeed = 200;
 var animationFrame = 1;
@@ -35,22 +39,9 @@ var saveState = {
         "hungerTimer": new Date(),
         "fullTimer": null,
         "dieLoop": new Date(),
-        "cookies": 10
+        "cookies": 100
     }
 };
-
-//check how many steps the user has taken.
-if (appbit.permissions.granted("access_activity")) {
-    //update the user's wallet with steps.
-    saveState.data.wallet += today.adjusted.steps;
-    //console.log(minuteHistory[0]);
-
-};
-// Disable app timeout
-if (appbit.appTimeoutEnabled) {
-    console.log("Timeout is enabled");
-}
-//appbit.appTimeoutEnabled = false; // Disable timeout
 
 //check if there is saved data.
 if (fs.existsSync("/private/data/save.txt")) {
@@ -64,6 +55,20 @@ else {
     console.log("no saved data found. creating new game.")
     fs.writeFileSync("save.txt", saveState, "json");
 }
+//check how many steps the user has taken.
+if (appbit.permissions.granted("access_activity")) {
+    //update the user's wallet with steps.
+    saveState.data.wallet += today.adjusted.steps;
+    //console.log(minuteHistory[0]);
+
+};
+// Disable app timeout
+if (appbit.appTimeoutEnabled) {
+    console.log("Timeout is enabled");
+}
+//appbit.appTimeoutEnabled = false; // Disable timeout
+
+
 
 
 clock.granularity = "seconds"; // seconds, minutes, hours
@@ -90,6 +95,18 @@ feedPetButton.addEventListener("click", (evt) => {
         console.log("out of cookies...")
     }
 })
+devButton.addEventListener("click", (evt) => {
+
+
+    saveState.data.hunger = 100;
+    //saveState.data.health = 0;
+})
+devButton2.addEventListener("click", (evt) => {
+
+
+    saveState.data.hunger = 0;
+    saveState.data.health = 100;
+})
 //happens when the clock ticks every second.
 clock.addEventListener("tick", (evt) => {
 
@@ -100,6 +117,7 @@ clock.addEventListener("tick", (evt) => {
     walletLabel.text = "Wallet:" + saveState.data.wallet;
     cookieLabel.text = "Cookies:" + saveState.data.cookies;
 
+    healthBar.width -= 10;
     // represents how many minutes have passed since the last save.
     lastSaveTime = checkDate(new Date(saveState.data.saveTimer)) * -1;
     hungerTime = checkDate(new Date(saveState.data.hungerTimer)) * -1;
@@ -141,6 +159,16 @@ clock.addEventListener("tick", (evt) => {
 
     }
 
+    //if 3000 min past the pet is starving!
+    if (lastSaveTime >= 3000) {
+        saveState.data.hunger = 100;
+        //update the current save state time.
+        saveState.data.saveTimer = new Date();
+        //update current save state.
+        fs.writeFileSync("save.txt", saveState, "json");
+
+    }
+
     //if the pet is dead display dead animation.
     if (saveState.data.health <= 0) {
         currentAnimation = 'dead';
@@ -161,9 +189,8 @@ clock.addEventListener("tick", (evt) => {
         saveState.data.dieLoop = new Date();
 
     }
-    //update current save state.
-    fs.writeFileSync("save.txt", saveState, "json");
-    console.log("time since last hunger added " + hungerTime + " Min");
+
+    //console.log("time since last hunger added " + hungerTime + " Min");
 });
 
 function checkDate(date) {
@@ -179,7 +206,11 @@ function swapImageAnimator() {
     switch (currentAnimation) {
         case 'sit':
 
-            sitAnimation();
+            if (currentPet == 'turtle') {
+                sitAnimationTurtle()
+            } else {
+                sitAnimation();
+            }
             break;
         case 'sleep':
             //sleepAnimation();
@@ -213,6 +244,63 @@ function sitAnimation() {
     }
 }
 
+function sitAnimationTurtle() {
+    switch (animationFrame) {
+        case 1:
+            image.href = "../resources/turtleImages/tile000.png";
+            animationFrame = 2;
+            break;
+        case 2:
+            image.href = "../resources/turtleImages/tile001.png";
+            animationFrame = 3;
+            break;
+        case 3:
+            image.href = "../resources/turtleImages/tile002.png";
+            animationFrame = 4;
+            break;
+        case 4:
+            image.href = "../resources/turtleImages/tile003.png";
+            animationFrame = 5;
+            break;
+        case 5:
+            image.href = "../resources/turtleImages/tile004.png";
+            animationFrame = 6;
+            break;
+        case 6:
+            image.href = "../resources/turtleImages/tile005.png";
+            animationFrame = 7;
+            break;
+        case 7:
+            image.href = "../resources/turtleImages/tile006.png";
+            animationFrame = 8;
+            break;
+        case 8:
+            image.href = "../resources/turtleImages/tile007.png";
+            animationFrame = 9;
+            break;
+        case 9:
+            image.href = "../resources/turtleImages/tile008.png";
+            animationFrame = 10;
+            break;
+        case 10:
+            image.href = "../resources/turtleImages/tile009.png";
+            animationFrame = 11;
+            break;
+        case 11:
+            image.href = "../resources/turtleImages/tile010.png";
+            animationFrame = 12;
+            break;
+        case 12:
+            image.href = "../resources/turtleImages/tile011.png";
+            animationFrame = 13;
+            break;
+        case 13:
+            image.href = "../resources/turtleImages/tile012.png";
+            animationFrame = 1;
+            break;
+    }
+}
+
 function deadAnimation() {
     switch (animationFrame) {
         case 1:
@@ -237,14 +325,19 @@ function deadAnimation() {
 //user is closing the app.
 appbit.onunload = () => {
 
-    console.log("App is being unloaded");
-    outbox
-  .enqueueFile("/private/data/save.txt")
-  .then(ft => {
-    console.log(`Transfer of ${ft.name} successfully queued.`);
-  })
-  .catch(err => {
-    console.log(`Failed to schedule transfer: ${err}`);
-  })
+    console.log("App data is being saved");
+    saveState.data.saveTimer = new Date();
+    //update current save state.
+    fs.writeFileSync("save.txt", saveState, "json");
+
+
+    //     outbox
+    //   .enqueueFile("/private/data/save.txt")
+    //   .then(ft => {
+    //     console.log(`Transfer of ${ft.name} successfully queued.`);
+    //   })
+    //   .catch(err => {
+    //     console.log(`Failed to schedule transfer: ${err}`);
+    //   })
 
 }
