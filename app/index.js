@@ -8,8 +8,14 @@ import { outbox } from "file-transfer";
 
 
 
+const myAnimation = document.getElementById("myAnimation");
+let pet = document.getElementById("pet");
+pet.display = 'none';
+myAnimation.animate("enable");
+//myAnimation.display = 'none';
 
 let image = document.getElementById('image');
+image.display = 'none';
 let hungerLabel = document.getElementById('hunger');
 let healthLabel = document.getElementById('health');
 let walletLabel = document.getElementById('wallet');
@@ -24,7 +30,7 @@ let healthBar = document.getElementById('healthBar');
 var lastSaveTime;
 var hungerTime;
 var dieTime;
-var currentPet = 'turtle';
+//var currentPet = 'turtle';
 var currentAnimation = 'sit';
 var animationSpeed = 200;
 var animationFrame = 1;
@@ -77,7 +83,7 @@ clock.granularity = "seconds"; // seconds, minutes, hours
 
 
 //animate the pet.
-setInterval(swapImageAnimator, animationSpeed);
+//setInterval(swapImageAnimator, animationSpeed);
 
 //event listeners
 //button event.
@@ -206,11 +212,9 @@ function swapImageAnimator() {
     switch (currentAnimation) {
         case 'sit':
 
-            if (currentPet == 'turtle') {
-                sitAnimationTurtle()
-            } else {
+            
                 sitAnimation();
-            }
+            
             break;
         case 'sleep':
             //sleepAnimation();

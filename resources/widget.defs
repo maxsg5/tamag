@@ -4,5 +4,12 @@
     <link rel="import" href="/mnt/sysassets/system_widget.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/text_button.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/icon_button.defs" />
+
+    <symbol id="frames" href="#sprite-image">
+      <animate id="anim" attributeName="value" begin="enable"
+          from="0" to="13" dur="2"
+          repeatDur="1" repeatCount="indefinite" />
+      <image href="./resources/mushroomImages/idle/sprite_00.png" width="100%" height="100%" x="0" y="25" />
+    </symbol>
   </defs>
 </svg>
