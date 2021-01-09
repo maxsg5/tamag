@@ -4,12 +4,10 @@
   <text id="health" />
   <text id="wallet" />
   <text id="cookies" />
-  <rect id="healthBar" class="info-bar" fill="fb-red" />
+  <!-- <rect id="healthBar" class="info-bar" fill="fb-red" /> -->
   
-  <section id="pet" >
-    <use id="myAnimation" href="#frames" />
-  </section>
-  <image id="image" x="25%" y="30%" width="50%" height="50%" href="" />
+  
+  <image id="image" x="25%" y="80" width="50%" height="50%" href="" />
 
   <!-- <use id="button-1" href="#text-button" class="text-button bottom application-fill" /> -->
   <use id="button-5" href="#icon-button" class="small-button application-fill " />

@@ -4,14 +4,25 @@ import clock from "clock";
 import { me as appbit } from "appbit";
 import { today } from "user-activity";
 import { outbox } from "file-transfer";
+import schedule from "fitbit-schedule/app"
+
+schedule.add({
+    data: "See you in an hour...",
+    due: Date.now() + 5000
+})
+
+schedule.ondue = event => {
+    console.log(event.data) // See you in an hour...
+}
 
 
 
-
-const myAnimation = document.getElementById("myAnimation");
+//const myAnimation = document.getElementById("myAnimation");
+//const egg = document.getElementById("egg");
+//egg.animate("enable");
 let pet = document.getElementById("pet");
-pet.display = 'none';
-myAnimation.animate("enable");
+
+//myAnimation.animate("enable");
 //myAnimation.display = 'none';
 
 let image = document.getElementById('image');
@@ -31,7 +42,7 @@ var lastSaveTime;
 var hungerTime;
 var dieTime;
 //var currentPet = 'turtle';
-var currentAnimation = 'sit';
+var currentAnimation = null;
 var animationSpeed = 200;
 var animationFrame = 1;
 
@@ -45,7 +56,9 @@ var saveState = {
         "hungerTimer": new Date(),
         "fullTimer": null,
         "dieLoop": new Date(),
-        "cookies": 100
+        "cookies": 100,
+        "pet": null,
+        "egg": 0,
     }
 };
 
@@ -53,7 +66,7 @@ var saveState = {
 if (fs.existsSync("/private/data/save.txt")) {
     //load any saved data to variables.
     saveState = fs.readFileSync("save.txt", "json");
-    console.log("saved data: Hunger:" + saveState.data.hunger + ", Wallet:" + saveState.data.wallet + ", health:" + saveState.data.health + ", TimeStamp:" + saveState.data.saveTimer);
+    //console.log("saved data: Hunger:" + saveState.data.hunger + ", Wallet:" + saveState.data.wallet + ", health:" + saveState.data.health + ", TimeStamp:" + saveState.data.saveTimer);
     console.log("time since last save " + checkDate(new Date(saveState.data.saveTimer)) * -1 + " Min");
 }
 //if there is no saved data. We must start a new game.
@@ -61,13 +74,7 @@ else {
     console.log("no saved data found. creating new game.")
     fs.writeFileSync("save.txt", saveState, "json");
 }
-//check how many steps the user has taken.
-if (appbit.permissions.granted("access_activity")) {
-    //update the user's wallet with steps.
-    saveState.data.wallet += today.adjusted.steps;
-    //console.log(minuteHistory[0]);
 
-};
 // Disable app timeout
 if (appbit.appTimeoutEnabled) {
     console.log("Timeout is enabled");
@@ -83,7 +90,7 @@ clock.granularity = "seconds"; // seconds, minutes, hours
 
 
 //animate the pet.
-//setInterval(swapImageAnimator, animationSpeed);
+setInterval(swapImageAnimator, animationSpeed);
 
 //event listeners
 //button event.
@@ -117,87 +124,125 @@ devButton2.addEventListener("click", (evt) => {
 clock.addEventListener("tick", (evt) => {
 
 
-
-    hungerLabel.text = "Hunger:" + saveState.data.hunger;
-    healthLabel.text = "Health:" + saveState.data.health;
-    walletLabel.text = "Wallet:" + saveState.data.wallet;
-    cookieLabel.text = "Cookies:" + saveState.data.cookies;
-
-    healthBar.width -= 10;
-    // represents how many minutes have passed since the last save.
-    lastSaveTime = checkDate(new Date(saveState.data.saveTimer)) * -1;
-    hungerTime = checkDate(new Date(saveState.data.hungerTimer)) * -1;
-    dieTime = checkDate(new Date(saveState.data.dieLoop)) * -1;
-
-
-    //if pet is not hungry rest dieLoop to zero.
-    if (saveState.data.hunger > 0) {
-        saveState.data.dieLoop = 0;
+    checkSteps();
+walletLabel.text = "steps:" + saveState.data.wallet;
+    if (saveState.data.egg == 0) {
+        cookieLabel.style.display = 'none';
+        feedPetButton.style.display = 'none';
+        
+        currentAnimation = 'egg';
+        if(saveState.data.wallet >= 9000)
+            saveState.data.egg = 1;
+    
+    if( saveState.data.egg == 1){
+        currentAnimation = 'egg1';
+        if(saveState.data.wallet >= 9300)
+            saveState.data.egg = 2;
+    }
+    if( saveState.data.egg == 2){
+        currentAnimation = 'egg2';
+        if(saveState.data.wallet >= 9500)
+            saveState.data.egg = 3;
+    }
+    if( saveState.data.egg == 2){
+        currentAnimation = 'egg3';
+        if(saveState.data.wallet >= 1000)
+            saveState.data.egg = null;
     }
 
-    //hunger is 0, pet is full -> health goes up
-    if (saveState.data.hunger == 0) {
-        if (lastSaveTime >= 1 && saveState.data.health < 100) {
-            saveState.data.health += 1;
+    } else {
+        hungerLabel.text = "Hunger:" + saveState.data.hunger;
+        healthLabel.text = "Health:" + saveState.data.health;
+        walletLabel.text = "Wallet:" + saveState.data.wallet;
+        cookieLabel.text = "Cookies:" + saveState.data.cookies;
+
+        // represents how many minutes have passed since the last save.
+        lastSaveTime = checkDate(new Date(saveState.data.saveTimer)) * -1;
+        hungerTime = checkDate(new Date(saveState.data.hungerTimer)) * -1;
+        dieTime = checkDate(new Date(saveState.data.dieLoop)) * -1;
+
+
+        //if pet is not hungry rest dieLoop to zero.
+        if (saveState.data.hunger > 0) {
+            saveState.data.dieLoop = 0;
+        }
+
+        //hunger is 0, pet is full -> health goes up
+        if (saveState.data.hunger == 0) {
+            if (lastSaveTime >= 1 && saveState.data.health < 100) {
+                saveState.data.health += 1;
+                //update the current save state time.
+                saveState.data.saveTimer = new Date();
+                //update current save state.
+                fs.writeFileSync("save.txt", saveState, "json");
+            }
+        }
+
+        //every 30 min the pet gains 1 hunger (becomes hungrier)
+        if (hungerTime >= 1 && saveState.data.hunger < 100) {
+            saveState.data.hunger += 1;
+            //update the current save state time.
+            saveState.data.hungerTimer = new Date();
+
+
+        }
+
+        //if 3000 min past the pet is starving!
+        if (lastSaveTime >= 3000) {
+            saveState.data.hunger = 100;
             //update the current save state time.
             saveState.data.saveTimer = new Date();
             //update current save state.
             fs.writeFileSync("save.txt", saveState, "json");
+
+        }
+
+        //if 3000 min past the pet is starving!
+        if (lastSaveTime >= 3000) {
+            saveState.data.hunger = 100;
+            //update the current save state time.
+            saveState.data.saveTimer = new Date();
+            //update current save state.
+            fs.writeFileSync("save.txt", saveState, "json");
+
+        }
+
+        //if the pet is dead display dead animation.
+        if (saveState.data.health <= 0) {
+            currentAnimation = 'dead';
+            feedPetButton.style.display = "none";
+            healthLabel.style.display = 'none';
+            cookieLabel.style.display = 'none';
+            hungerLabel.style.display = 'none';
+            walletLabel.style.display = 'none';
+            return;
+        }
+
+        //if pet runs out of hunger health drops every min
+        if (saveState.data.hunger == 100 && dieTime >= 1) {
+
+
+            saveState.data.health -= 1;
+            //update the current save state time.
+            saveState.data.dieLoop = new Date();
+
         }
     }
 
-    //every 30 min the pet gains 1 hunger (becomes hungrier)
-    if (hungerTime >= 1 && saveState.data.hunger < 100) {
-        saveState.data.hunger += 1;
-        //update the current save state time.
-        saveState.data.hungerTimer = new Date();
-
-
-    }
-
-    //if 3000 min past the pet is starving!
-    if (lastSaveTime >= 3000) {
-        saveState.data.hunger = 100;
-        //update the current save state time.
-        saveState.data.saveTimer = new Date();
-        //update current save state.
-        fs.writeFileSync("save.txt", saveState, "json");
-
-    }
-
-    //if 3000 min past the pet is starving!
-    if (lastSaveTime >= 3000) {
-        saveState.data.hunger = 100;
-        //update the current save state time.
-        saveState.data.saveTimer = new Date();
-        //update current save state.
-        fs.writeFileSync("save.txt", saveState, "json");
-
-    }
-
-    //if the pet is dead display dead animation.
-    if (saveState.data.health <= 0) {
-        currentAnimation = 'dead';
-        feedPetButton.style.display = "none";
-        healthLabel.style.display = 'none';
-        cookieLabel.style.display = 'none';
-        hungerLabel.style.display = 'none';
-        walletLabel.style.display = 'none';
-        return;
-    }
-
-    //if pet runs out of hunger health drops every min
-    if (saveState.data.hunger == 100 && dieTime >= 1) {
-
-
-        saveState.data.health -= 1;
-        //update the current save state time.
-        saveState.data.dieLoop = new Date();
-
-    }
 
     //console.log("time since last hunger added " + hungerTime + " Min");
 });
+
+function checkSteps() {
+    //check how many steps the user has taken.
+    if (appbit.permissions.granted("access_activity")) {
+        //update the user's wallet with steps.
+        var stepDif = today.adjusted.steps - saveState.data.wallet;
+        saveState.data.wallet += stepDif;
+        //console.log(minuteHistory[0]);
+
+    }
+}
 
 function checkDate(date) {
     var today = new Date();
@@ -210,11 +255,20 @@ function checkDate(date) {
 function swapImageAnimator() {
 
     switch (currentAnimation) {
+        case 'egg':
+            eggAnimation1();
+            break;
+        case 'egg1':
+            eggAnimation2();
+            break;
+        case 'egg2':
+            eggAnimation3();
+            break;
+        case 'egg3':
+            eggAnimation4();
+            break;
         case 'sit':
-
-            
-                sitAnimation();
-            
+            sitAnimation();
             break;
         case 'sleep':
             //sleepAnimation();
@@ -228,6 +282,74 @@ function swapImageAnimator() {
     }
 }
 
+function eggAnimation1() {
+    switch (animationFrame) {
+        case 1:
+            image.href = "../resources/eggImages/purpleEgg/sprite_0.png";
+            animationFrame = 2;
+            break;
+        case 2:
+            image.y = image.y + 5;
+
+            animationFrame = 3;
+            break;
+        case 3:
+            image.y = image.y - 5;
+            animationFrame = 1;
+            break;
+    }
+}
+function eggAnimation2() {
+    switch (animationFrame) {
+        case 1:
+            image.href = "../resources/eggImages/purpleEgg/sprite_1.png";
+            animationFrame = 2;
+            break;
+        case 2:
+            image.y = image.y + 5;
+
+            animationFrame = 3;
+            break;
+        case 3:
+            image.y = image.y - 5;
+            animationFrame = 1;
+            break;
+    }
+}
+function eggAnimation3() {
+    switch (animationFrame) {
+        case 1:
+            image.href = "../resources/eggImages/purpleEgg/sprite_2.png";
+            animationFrame = 2;
+            break;
+        case 2:
+            image.y = image.y + 5;
+
+            animationFrame = 3;
+            break;
+        case 3:
+            image.y = image.y - 5;
+            animationFrame = 1;
+            break;
+    }
+}
+function eggAnimation4() {
+    switch (animationFrame) {
+        case 1:
+            image.href = "../resources/eggImages/purpleEgg/sprite_3.png";
+            animationFrame = 2;
+            break;
+        case 2:
+            image.y = image.y + 5;
+
+            animationFrame = 3;
+            break;
+        case 3:
+            image.y = image.y - 5;
+            animationFrame = 1;
+            break;
+    }
+}
 
 function sitAnimation() {
     switch (animationFrame) {

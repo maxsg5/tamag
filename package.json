@@ -8,7 +8,7 @@
     "@fitbit/sdk-cli": "^1.7.3"
   },
   "fitbit": {
-    "appUUID": "e24a1925-f761-4f4c-945a-ce447fa343e9",
+    "appUUID": "3e287f08-8c69-43a8-ae81-49d0ce365a5e",
     "appType": "app",
     "appDisplayName": "Tamag",
     "iconFile": "resources/icon.png",
@@ -27,5 +27,8 @@
   "scripts": {
     "build": "fitbit-build",
     "debug": "fitbit"
+  },
+  "dependencies": {
+    "fitbit-schedule": "^1.0.1"
   }
 }
