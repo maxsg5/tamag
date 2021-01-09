@@ -9,9 +9,10 @@ import { next } from 'fitbit-views';
 
 
 export default () => {
+    console.log("dfjsdlkfjds");
 	//document.getElementById('some-text').text = 'Hi there :)';
 	//document.getElementById('my-button').onactivate = () => next('view-2');
-
+};
 schedule.add({
     data: "See you in an hour...",
     due: Date.now() + 5000
@@ -23,13 +24,10 @@ schedule.ondue = event => {
 
 
 
-//const myAnimation = document.getElementById("myAnimation");
-//const egg = document.getElementById("egg");
-//egg.animate("enable");
+
 let pet = document.getElementById("pet");
 
-//myAnimation.animate("enable");
-//myAnimation.display = 'none';
+
 
 let image = document.getElementById('image');
 image.display = 'none';
@@ -501,4 +499,3 @@ appbit.onunload = () => {
     //   })
 
 }
-};

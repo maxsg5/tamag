@@ -1,9 +1,7 @@
 <svg>
   <use id="myList" href="#tile-list" class="horizontal-pad">
     <var id="separator-height-bottom" value="6" />
-    <use href="#my-header">
-      <set href="#text" attributeName="text-buffer" to="HEADER" />
-    </use>
+    
     <use id="item1" href="#my-item">
     <image id="image" x="25%" y="0" width="50%" height="100%" href="../resources/eggImages/greenEgg/sprite_0.png" />
       
