@@ -41,9 +41,9 @@ let healthBar = document.getElementById('healthBar');
 var lastSaveTime;
 var hungerTime;
 var dieTime;
-//var currentPet = 'turtle';
+var currentPet = 'shroom';
 var currentAnimation = null;
-var animationSpeed = 200;
+var animationSpeed = 150;
 var animationFrame = 1;
 
 //initial game start data.
@@ -59,6 +59,8 @@ var saveState = {
         "cookies": 100,
         "pet": null,
         "egg": 0,
+        "backgroundTask": false,
+        "currentAnimation": null
     }
 };
 
@@ -125,32 +127,38 @@ clock.addEventListener("tick", (evt) => {
 
 
     checkSteps();
-walletLabel.text = "steps:" + saveState.data.wallet;
+    walletLabel.text = "steps:" + saveState.data.wallet;
     if (saveState.data.egg == 0) {
-        cookieLabel.style.display = 'none';
+
         feedPetButton.style.display = 'none';
-        
-        currentAnimation = 'egg';
-        if(saveState.data.wallet >= 9000)
+
+        saveState.data.currentAnimation = 'egg';
+        if (saveState.data.wallet >= 9000)
             saveState.data.egg = 1;
-    
-    if( saveState.data.egg == 1){
-        currentAnimation = 'egg1';
-        if(saveState.data.wallet >= 9300)
+    }
+    else if (saveState.data.egg == 1) {
+        saveState.data.currentAnimation = 'egg1';
+        if (saveState.data.wallet >= 9100)
             saveState.data.egg = 2;
     }
-    if( saveState.data.egg == 2){
-        currentAnimation = 'egg2';
-        if(saveState.data.wallet >= 9500)
+    else if (saveState.data.egg == 2) {
+        saveState.data.currentAnimation = 'egg2';
+        if (saveState.data.wallet >= 9200)
             saveState.data.egg = 3;
     }
-    if( saveState.data.egg == 2){
-        currentAnimation = 'egg3';
-        if(saveState.data.wallet >= 1000)
+    else if (saveState.data.egg == 3) {
+        saveState.data.currentAnimation = 'egg3';
+        if (saveState.data.wallet >= 9300) {
             saveState.data.egg = null;
+            saveState.data.currentAnimation = 'sit';
+            saveState.data.wallet = 0;
+        }
     }
 
-    } else {
+
+    else {
+        cookieLabel.style.display = 'block';
+        feedPetButton.style.display = 'inline';
         hungerLabel.text = "Hunger:" + saveState.data.hunger;
         healthLabel.text = "Health:" + saveState.data.health;
         walletLabel.text = "Wallet:" + saveState.data.wallet;
@@ -254,7 +262,7 @@ function checkDate(date) {
 }
 function swapImageAnimator() {
 
-    switch (currentAnimation) {
+    switch (saveState.data.currentAnimation) {
         case 'egg':
             eggAnimation1();
             break;
@@ -268,7 +276,10 @@ function swapImageAnimator() {
             eggAnimation4();
             break;
         case 'sit':
-            sitAnimation();
+            if (currentPet == 'shroom')
+                sitAnimationShroom();
+            if (currentPet == 'dino')
+                sitAnimation();
             break;
         case 'sleep':
             //sleepAnimation();
@@ -370,58 +381,75 @@ function sitAnimation() {
     }
 }
 
-function sitAnimationTurtle() {
+function sitAnimationShroom() {
     switch (animationFrame) {
         case 1:
-            image.href = "../resources/turtleImages/tile000.png";
+            image.href = "../resources/mushroomImages/idle/sprite_00.png";
+            
             animationFrame = 2;
             break;
         case 2:
-            image.href = "../resources/turtleImages/tile001.png";
+            image.href = "../resources/mushroomImages/idle/sprite_01.png";
             animationFrame = 3;
             break;
         case 3:
-            image.href = "../resources/turtleImages/tile002.png";
+            image.href = "../resources/mushroomImages/idle/sprite_02.png";
+
             animationFrame = 4;
             break;
         case 4:
-            image.href = "../resources/turtleImages/tile003.png";
+            image.href = "../resources/mushroomImages/idle/sprite_03.png";
+
             animationFrame = 5;
             break;
         case 5:
-            image.href = "../resources/turtleImages/tile004.png";
+            image.href = "../resources/mushroomImages/idle/sprite_04.png";
+
             animationFrame = 6;
             break;
         case 6:
-            image.href = "../resources/turtleImages/tile005.png";
+            image.href = "../resources/mushroomImages/idle/sprite_05.png";
+
             animationFrame = 7;
             break;
         case 7:
-            image.href = "../resources/turtleImages/tile006.png";
+            image.href = "../resources/mushroomImages/idle/sprite_06.png";
+
             animationFrame = 8;
             break;
         case 8:
-            image.href = "../resources/turtleImages/tile007.png";
+            image.href = "../resources/mushroomImages/idle/sprite_07.png";
+
             animationFrame = 9;
             break;
         case 9:
-            image.href = "../resources/turtleImages/tile008.png";
+            image.href = "../resources/mushroomImages/idle/sprite_08.png";
+
             animationFrame = 10;
             break;
         case 10:
-            image.href = "../resources/turtleImages/tile009.png";
+            image.href = "../resources/mushroomImages/idle/sprite_09.png";
+
             animationFrame = 11;
             break;
         case 11:
-            image.href = "../resources/turtleImages/tile010.png";
+            image.href = "../resources/mushroomImages/idle/sprite_10.png";
+
             animationFrame = 12;
             break;
         case 12:
-            image.href = "../resources/turtleImages/tile011.png";
+            image.href = "../resources/mushroomImages/idle/sprite_11.png";
+
             animationFrame = 13;
             break;
         case 13:
-            image.href = "../resources/turtleImages/tile012.png";
+            image.href = "../resources/mushroomImages/idle/sprite_12.png";
+
+            animationFrame = 14;
+            break;
+        case 14:
+            image.href = "../resources/mushroomImages/idle/sprite_13.png";
+
             animationFrame = 1;
             break;
     }

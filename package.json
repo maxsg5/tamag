@@ -29,6 +29,7 @@
     "debug": "fitbit"
   },
   "dependencies": {
-    "fitbit-schedule": "^1.0.1"
+    "fitbit-schedule": "^1.0.1",
+    "fitbit-views": "^1.0.3"
   }
 }
