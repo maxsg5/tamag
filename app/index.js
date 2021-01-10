@@ -76,14 +76,39 @@ items.forEach((element, index) => {
   });
 });
 
-schedule.add({
-  data: "See you in an hour...",
-  due: Date.now() + 5000
-})
+// schedule.add({
+//   data: "Hunger",
+//   due: Date.now() + 10000,
+//   tolerance: 5000
+// })
 
-schedule.ondue = event => {
-  console.log(event.data) // See you in an hour...
-}
+// schedule.onmissed = event => {
+//   console.log(event.data + "missed event");
+//   if (event.data == "Hunger") {
+//     if (saveState.data.hunger < 100) {
+//       saveState.data.hunger += 1;
+//       schedule.add({
+//         data: "Hunger",
+//         due: Date.now() + 10000,
+//         tolerance: 10000
+//       });
+//     }
+//   }
+
+// }
+// schedule.ondue = event => {
+//   console.log(event.data);
+//   if (event.data == "Hunger") {
+//     if (saveState.data.hunger < 100) {
+//       saveState.data.hunger += 1;
+//       schedule.add({
+//         data: "Hunger",
+//         due: Date.now() + 10000,
+//         tolerance: 10000
+//       });
+//     }
+//   }
+// }
 
 
 
@@ -150,7 +175,7 @@ devButton2.addEventListener("click", (evt) => {
 })
 //happens when the clock ticks every second.
 clock.addEventListener("tick", (evt) => {
-if (saveState.data.egg == -1) {
+  if (saveState.data.egg == -1) {
     feedPetButton.style.display = 'none';
     healthLabel.style.display = 'none';
     cookieLabel.style.display = 'none';
@@ -159,11 +184,11 @@ if (saveState.data.egg == -1) {
     background.style.display = 'none';
     return;
   }
-list.style.display = 'none'
-background.style.display = 'inline';
+  list.style.display = 'none'
+  background.style.display = 'inline';
   checkSteps();
   walletLabel.text = "steps:" + saveState.data.wallet;
-  
+
   if (saveState.data.egg == 0) {
     background.style.display = 'inline';
     feedPetButton.style.display = 'none';
