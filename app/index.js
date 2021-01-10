@@ -42,8 +42,8 @@ let healthBar = document.getElementById('healthBar');
 var lastSaveTime;
 var hungerTime;
 var dieTime;
-var currentPet = 'shroom';
-var currentAnimation = null;
+
+
 var animationSpeed = 150;
 var animationFrame = 1;
 
@@ -71,48 +71,10 @@ items.forEach((element, index) => {
   touch.addEventListener("click", (evt) => {
     console.log(`touched: ${index}`);
     list.style.display = 'none';
-    saveState.data.egg = 0;
+    saveState.data.egg = index;
     //page2.display = 'initial';
   });
 });
-
-// schedule.add({
-//   data: "Hunger",
-//   due: Date.now() + 10000,
-//   tolerance: 5000
-// })
-
-// schedule.onmissed = event => {
-//   console.log(event.data + "missed event");
-//   if (event.data == "Hunger") {
-//     if (saveState.data.hunger < 100) {
-//       saveState.data.hunger += 1;
-//       schedule.add({
-//         data: "Hunger",
-//         due: Date.now() + 10000,
-//         tolerance: 10000
-//       });
-//     }
-//   }
-
-// }
-// schedule.ondue = event => {
-//   console.log(event.data);
-//   if (event.data == "Hunger") {
-//     if (saveState.data.hunger < 100) {
-//       saveState.data.hunger += 1;
-//       schedule.add({
-//         data: "Hunger",
-//         due: Date.now() + 10000,
-//         tolerance: 10000
-//       });
-//     }
-//   }
-// }
-
-
-
-
 
 
 //check if there is saved data.
@@ -169,7 +131,7 @@ devButton.addEventListener("click", (evt) => {
 })
 devButton2.addEventListener("click", (evt) => {
 
-
+  saveState.data.cookies += 100;
   saveState.data.hunger = 0;
   saveState.data.health = 100;
 })
@@ -193,26 +155,92 @@ clock.addEventListener("tick", (evt) => {
     background.style.display = 'inline';
     feedPetButton.style.display = 'none';
     walletLabel.style.display = 'inline';
-
-    saveState.data.currentAnimation = 'egg';
+    saveState.data.currentAnimation = 'egg0';
     if (saveState.data.wallet >= 0)
-      saveState.data.egg = 1;
+      saveState.data.egg = 0.1;
   }
   else if (saveState.data.egg == 1) {
+    background.style.display = 'inline';
+    feedPetButton.style.display = 'none';
+    walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg1';
     if (saveState.data.wallet >= 0)
-      saveState.data.egg = 2;
+      saveState.data.egg = 1.1;
   }
   else if (saveState.data.egg == 2) {
+    background.style.display = 'inline';
+    feedPetButton.style.display = 'none';
+    walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg2';
     if (saveState.data.wallet >= 0)
-      saveState.data.egg = 3;
+      saveState.data.egg = 2.1;
   }
-  else if (saveState.data.egg == 3) {
-    saveState.data.currentAnimation = 'egg3';
+  else if (saveState.data.egg == 0.1) {
+    saveState.data.currentAnimation = 'egg0.1';
+    if (saveState.data.wallet >= 0)
+      saveState.data.egg = 0.2;
+  }
+  else if (saveState.data.egg == 1.1) {
+    saveState.data.currentAnimation = 'egg1.1';
+    if (saveState.data.wallet >= 0)
+      saveState.data.egg = 1.2;
+  }
+  else if (saveState.data.egg == 2.1) {
+    saveState.data.currentAnimation = 'egg2.1';
+    if (saveState.data.wallet >= 0)
+      saveState.data.egg = 2.2;
+  }
+  else if (saveState.data.egg == 0.2) {
+    saveState.data.currentAnimation = 'egg0.2';
+    if (saveState.data.wallet >= 0)
+      saveState.data.egg = 0.3;
+  }
+  else if (saveState.data.egg == 1.2) {
+    saveState.data.currentAnimation = 'egg1.2';
+    if (saveState.data.wallet >= 0)
+      saveState.data.egg = 1.3;
+  }
+  else if (saveState.data.egg == 2.2) {
+    saveState.data.currentAnimation = 'egg2.2';
+    if (saveState.data.wallet >= 0)
+      saveState.data.egg = 2.3;
+  }
+  else if (saveState.data.egg == 0.3) {
+    saveState.data.currentAnimation = 'egg0.3';
     if (saveState.data.wallet >= 0) {
       saveState.data.egg = null;
       saveState.data.currentAnimation = 'sit';
+      saveState.data.wallet = 0;
+      saveState.data.currentPet = 'dino';
+      feedPetButton.style.display = 'inline';
+      healthLabel.style.display = 'inline';
+      cookieLabel.style.display = 'inline';
+      hungerLabel.style.display = 'inline';
+      walletLabel.style.display = 'inline';
+
+    }
+  }
+  else if (saveState.data.egg == 1.3) {
+    saveState.data.currentAnimation = 'egg1.3';
+    if (saveState.data.wallet >= 0) {
+      saveState.data.egg = null;
+      saveState.data.currentAnimation = 'sit';
+      saveState.data.currentPet = 'rock';
+      saveState.data.wallet = 0;
+      feedPetButton.style.display = 'inline';
+      healthLabel.style.display = 'inline';
+      cookieLabel.style.display = 'inline';
+      hungerLabel.style.display = 'inline';
+      walletLabel.style.display = 'inline';
+
+    }
+  }
+  else if (saveState.data.egg == 2.3) {
+    saveState.data.currentAnimation = 'egg2.3';
+    if (saveState.data.wallet >= 0) {
+      saveState.data.egg = null;
+      saveState.data.currentAnimation = 'sit';
+      saveState.data.currentPet = 'shroom';
       saveState.data.wallet = 0;
       feedPetButton.style.display = 'inline';
       healthLabel.style.display = 'inline';
@@ -253,15 +281,215 @@ clock.addEventListener("tick", (evt) => {
         fs.writeFileSync("save.txt", saveState, "json");
       }
     }
+    //hunger logic-----------------------------------------------
+    if (hungerTime >= 100 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 100;
+      }
 
-    //every 30 min the pet gains 1 hunger (becomes hungrier)
-    if (hungerTime >= 60 && saveState.data.hunger < 100) {
-      saveState.data.hunger += 1;
       //update the current save state time.
       saveState.data.hungerTimer = new Date();
-
-
     }
+    if (hungerTime >= 95 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 95;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 90 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 90;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 85 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 85;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 80 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 80;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 75 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 75;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 70 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 70;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 65 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 65;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 60 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 60;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 55 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 55;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 50 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 50;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 45 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 45;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 40 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 40;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 35 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 35;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 30 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 30;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 25 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 25;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 20 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 20;
+      }
+
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 15 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 15;
+      }
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 10 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 10;
+      }
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    if (hungerTime >= 5 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 5;
+      }
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+    //every 30 min the pet gains 1 hunger (becomes hungrier)
+    if (hungerTime >= 1 && saveState.data.hunger < 100) {
+      if (saveState.data.hunger > 100) {
+        saveState.data.hunger = 100;
+      } else {
+        saveState.data.hunger += 1;
+      }
+      //update the current save state time.
+      saveState.data.hungerTimer = new Date();
+    }
+
 
     //if 3000 min past the pet is starving!
     if (lastSaveTime >= 3000) {
@@ -275,7 +503,7 @@ clock.addEventListener("tick", (evt) => {
 
     //if the pet is dead display dead animation.
     if (saveState.data.health <= 0) {
-      currentAnimation = 'dead';
+      saveState.data.currentAnimation = 'dead';
       feedPetButton.style.display = "none";
       healthLabel.style.display = 'none';
       cookieLabel.style.display = 'none';
@@ -321,23 +549,49 @@ function checkDate(date) {
 function swapImageAnimator() {
 
   switch (saveState.data.currentAnimation) {
-    case 'egg':
-      eggAnimation1();
+    case 'egg2':
+      eggPurpleAnimation1();
+      break;
+    case 'egg2.1':
+      eggPurpleAnimation2();
+      break;
+    case 'egg2.2':
+      eggPurpleAnimation3();
+      break;
+    case 'egg2.3':
+      eggPurpleAnimation4();
       break;
     case 'egg1':
-      eggAnimation2();
+      eggOrangeAnimation1();
       break;
-    case 'egg2':
-      eggAnimation3();
+    case 'egg1.1':
+      eggOrangeAnimation2();
       break;
-    case 'egg3':
-      eggAnimation4();
+    case 'egg1.2':
+      eggOrangeAnimation3();
+      break;
+    case 'egg1.3':
+      eggOrangeAnimation4();
+      break;
+    case 'egg0':
+      eggGreenAnimation1();
+      break;
+    case 'egg0.1':
+      eggGreenAnimation2();
+      break;
+    case 'egg0.2':
+      eggGreenAnimation3();
+      break;
+    case 'egg0.3':
+      eggGreenAnimation4();
       break;
     case 'sit':
-      if (currentPet == 'shroom')
+      if (saveState.data.currentPet == 'shroom')
         sitAnimationShroom();
-      if (currentPet == 'dino')
-        sitAnimation();
+      if (saveState.data.currentPet == 'rock')
+        sitAnimationRock();
+      if (saveState.data.currentPet == 'dino')
+        sitAnimationDino();
       break;
     case 'sleep':
       //sleepAnimation();
@@ -351,7 +605,144 @@ function swapImageAnimator() {
   }
 }
 
-function eggAnimation1() {
+function eggOrangeAnimation1() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/orangeEgg/sprite_0.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+function eggOrangeAnimation2() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/orangeEgg/sprite_1.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+function eggOrangeAnimation3() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/orangeEgg/sprite_2.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+function eggOrangeAnimation4() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/orangeEgg/sprite_3.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+function eggGreenAnimation1() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/greenEgg/sprite_0.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+function eggGreenAnimation2() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/greenEgg/sprite_1.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+function eggGreenAnimation3() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/greenEgg/sprite_2.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+function eggGreenAnimation4() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/eggImages/greenEgg/sprite_3.png";
+      animationFrame = 2;
+      break;
+    case 2:
+      image.y = image.y + 5;
+
+      animationFrame = 3;
+      break;
+    case 3:
+      image.y = image.y - 5;
+      animationFrame = 1;
+      break;
+  }
+}
+
+function eggPurpleAnimation1() {
   switch (animationFrame) {
     case 1:
       image.href = "../resources/eggImages/purpleEgg/sprite_0.png";
@@ -368,7 +759,7 @@ function eggAnimation1() {
       break;
   }
 }
-function eggAnimation2() {
+function eggPurpleAnimation2() {
   switch (animationFrame) {
     case 1:
       image.href = "../resources/eggImages/purpleEgg/sprite_1.png";
@@ -385,7 +776,7 @@ function eggAnimation2() {
       break;
   }
 }
-function eggAnimation3() {
+function eggPurpleAnimation3() {
   switch (animationFrame) {
     case 1:
       image.href = "../resources/eggImages/purpleEgg/sprite_2.png";
@@ -402,7 +793,7 @@ function eggAnimation3() {
       break;
   }
 }
-function eggAnimation4() {
+function eggPurpleAnimation4() {
   switch (animationFrame) {
     case 1:
       image.href = "../resources/eggImages/purpleEgg/sprite_3.png";
@@ -420,10 +811,14 @@ function eggAnimation4() {
   }
 }
 
-function sitAnimation() {
+function sitAnimationDino() {
   switch (animationFrame) {
     case 1:
       image.href = "../resources/petImages/tile000.png";
+      image.x = 75;
+      image.y = 100;
+      image.width = 200;
+      image.height = 200;
       animationFrame = 2;
       break;
     case 2:
@@ -443,7 +838,11 @@ function sitAnimationShroom() {
   switch (animationFrame) {
     case 1:
       image.href = "../resources/mushroomImages/idle/sprite_00.png";
-
+      image.x = -80;
+      
+      image.y = -40;
+      image.width = 500;
+      image.height = 500;
       animationFrame = 2;
       break;
     case 2:
@@ -507,6 +906,82 @@ function sitAnimationShroom() {
       break;
     case 14:
       image.href = "../resources/mushroomImages/idle/sprite_13.png";
+
+      animationFrame = 1;
+      break;
+  }
+}
+function sitAnimationRock() {
+  switch (animationFrame) {
+    case 1:
+      image.href = "../resources/rockImages/idle/sprite_00.png";
+      image.x = 95;
+      image.y = 100;
+      image.width = 150;
+      image.height = 150;
+      animationFrame = 2;
+      break;
+    case 2:
+      image.href = "../resources/rockImages/idle/sprite_01.png";
+      animationFrame = 3;
+      break;
+    case 3:
+      image.href = "../resources/rockImages/idle/sprite_02.png";
+
+      animationFrame = 4;
+      break;
+    case 4:
+      image.href = "../resources/rockImages/idle/sprite_03.png";
+
+      animationFrame = 5;
+      break;
+    case 5:
+      image.href = "../resources/rockImages/idle/sprite_04.png";
+
+      animationFrame = 6;
+      break;
+    case 6:
+      image.href = "../resources/rockImages/idle/sprite_05.png";
+
+      animationFrame = 7;
+      break;
+    case 7:
+      image.href = "../resources/rockImages/idle/sprite_06.png";
+
+      animationFrame = 8;
+      break;
+    case 8:
+      image.href = "../resources/rockImages/idle/sprite_07.png";
+
+      animationFrame = 9;
+      break;
+    case 9:
+      image.href = "../resources/rockImages/idle/sprite_08.png";
+
+      animationFrame = 10;
+      break;
+    case 10:
+      image.href = "../resources/rockImages/idle/sprite_09.png";
+
+      animationFrame = 11;
+      break;
+    case 11:
+      image.href = "../resources/rockImages/idle/sprite_10.png";
+
+      animationFrame = 12;
+      break;
+    case 12:
+      image.href = "../resources/rockImages/idle/sprite_11.png";
+
+      animationFrame = 13;
+      break;
+    case 13:
+      image.href = "../resources/rockImages/idle/sprite_12.png";
+
+      animationFrame = 14;
+      break;
+    case 14:
+      image.href = "../resources/rockImages/idle/sprite_13.png";
 
       animationFrame = 1;
       break;
