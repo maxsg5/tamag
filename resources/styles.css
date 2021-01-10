@@ -65,6 +65,12 @@
   y: 300;
 }
 
+#button-7 {
+  fill: green;
+  x: 150;
+  y: 270;
+}
+
 .plus-button #image {
   href: "../resources/petImages/cookie.png";
   height: 18;

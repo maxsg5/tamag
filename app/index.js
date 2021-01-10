@@ -35,7 +35,11 @@ let cookieLabel = document.getElementById('cookies');
 let feedPetButton = document.getElementById('button-4');
 let devButton = document.getElementById('button-5');
 let devButton2 = document.getElementById('button-6');
+let devButton3 = document.getElementById('button-7');
 
+//devButton.style.display ='none';
+//devButton2.style.display ='none';
+devButton3.style.display = 'none';
 
 let healthBar = document.getElementById('healthBar');
 
@@ -52,7 +56,7 @@ var saveState = {
   "data": {
     "hunger": 0,
     "wallet": 0,
-    "health": 100,
+    "health": 2,
     "saveTimer": new Date(),
     "hungerTimer": new Date(),
     "fullTimer": null,
@@ -129,6 +133,30 @@ devButton.addEventListener("click", (evt) => {
   saveState.data.hunger = 100;
   //saveState.data.health = 0;
 })
+devButton3.addEventListener("click", (evt) => {
+
+  saveState = {
+    "data": {
+      "hunger": 0,
+      "wallet": 0,
+      "health": 2,
+      "saveTimer": new Date(),
+      "hungerTimer": new Date(),
+      "fullTimer": null,
+      "dieLoop": new Date(),
+      "cookies": 1000,
+      "pet": null,
+      "egg": -1,
+      "backgroundTask": false,
+      "currentAnimation": null
+    }
+  };
+  console.log("creating new game.")
+  fs.writeFileSync("save.txt", saveState, "json");
+  list.style.display = 'inline';
+  image.style.display = 'none';
+  devButton3.style.display = 'none';
+})
 devButton2.addEventListener("click", (evt) => {
 
   saveState.data.cookies += 100;
@@ -146,7 +174,22 @@ clock.addEventListener("tick", (evt) => {
     background.style.display = 'none';
     return;
   }
+
+  //if the pet is dead display dead animation.
+  if (saveState.data.health <= 0) {
+    animationFrame = 1;
+    saveState.data.currentAnimation = 'dead';
+    feedPetButton.style.display = "none";
+    healthLabel.style.display = 'none';
+    cookieLabel.style.display = 'none';
+    hungerLabel.style.display = 'none';
+    walletLabel.style.display = 'none';
+    devButton3.style.display = 'inline';
+
+    return;
+  }
   list.style.display = 'none'
+  image.style.display = 'inline';
   background.style.display = 'inline';
   checkSteps();
   walletLabel.text = "steps:" + saveState.data.wallet;
@@ -501,16 +544,7 @@ clock.addEventListener("tick", (evt) => {
 
     }
 
-    //if the pet is dead display dead animation.
-    if (saveState.data.health <= 0) {
-      saveState.data.currentAnimation = 'dead';
-      feedPetButton.style.display = "none";
-      healthLabel.style.display = 'none';
-      cookieLabel.style.display = 'none';
-      hungerLabel.style.display = 'none';
-      walletLabel.style.display = 'none';
-      return;
-    }
+    
 
     //if pet runs out of hunger health drops every min
     if (saveState.data.hunger == 100 && dieTime >= 1) {
@@ -549,6 +583,7 @@ function checkDate(date) {
 function swapImageAnimator() {
 
   switch (saveState.data.currentAnimation) {
+    
     case 'egg2':
       eggPurpleAnimation1();
       break;
@@ -586,6 +621,7 @@ function swapImageAnimator() {
       eggGreenAnimation4();
       break;
     case 'sit':
+      
       if (saveState.data.currentPet == 'shroom')
         sitAnimationShroom();
       if (saveState.data.currentPet == 'rock')
@@ -600,6 +636,7 @@ function swapImageAnimator() {
       //eatAnimation();
       break;
     case 'dead':
+      
       deadAnimation();
       break;
   }
@@ -608,6 +645,10 @@ function swapImageAnimator() {
 function eggOrangeAnimation1() {
   switch (animationFrame) {
     case 1:
+      image.x = 60;
+      image.y = 90;
+      image.width = 200;
+      image.height = 200;
       image.href = "../resources/eggImages/orangeEgg/sprite_0.png";
       animationFrame = 2;
       break;
@@ -676,6 +717,10 @@ function eggOrangeAnimation4() {
 function eggGreenAnimation1() {
   switch (animationFrame) {
     case 1:
+      image.x = 60;
+      image.y = 90;
+      image.width = 200;
+      image.height = 200;
       image.href = "../resources/eggImages/greenEgg/sprite_0.png";
       animationFrame = 2;
       break;
@@ -745,6 +790,10 @@ function eggGreenAnimation4() {
 function eggPurpleAnimation1() {
   switch (animationFrame) {
     case 1:
+      image.x = 60;
+      image.y = 90;
+      image.width = 200;
+      image.height = 200;
       image.href = "../resources/eggImages/purpleEgg/sprite_0.png";
       animationFrame = 2;
       break;
@@ -814,11 +863,12 @@ function eggPurpleAnimation4() {
 function sitAnimationDino() {
   switch (animationFrame) {
     case 1:
-      image.href = "../resources/petImages/tile000.png";
       image.x = 75;
       image.y = 100;
       image.width = 200;
       image.height = 200;
+      image.href = "../resources/petImages/tile000.png";
+      
       animationFrame = 2;
       break;
     case 2:
@@ -837,12 +887,13 @@ function sitAnimationDino() {
 function sitAnimationShroom() {
   switch (animationFrame) {
     case 1:
-      image.href = "../resources/mushroomImages/idle/sprite_00.png";
       image.x = -80;
       
       image.y = -40;
       image.width = 500;
       image.height = 500;
+      image.href = "../resources/mushroomImages/idle/sprite_00.png";
+      
       animationFrame = 2;
       break;
     case 2:
@@ -914,11 +965,12 @@ function sitAnimationShroom() {
 function sitAnimationRock() {
   switch (animationFrame) {
     case 1:
-      image.href = "../resources/rockImages/idle/sprite_00.png";
       image.x = 95;
       image.y = 100;
       image.width = 150;
       image.height = 150;
+      image.href = "../resources/rockImages/idle/sprite_00.png";
+      
       animationFrame = 2;
       break;
     case 2:
@@ -991,6 +1043,7 @@ function sitAnimationRock() {
 function deadAnimation() {
   switch (animationFrame) {
     case 1:
+      console.log("I'm dead...");
       image.href = "../resources/petImages/dead.png";
       image.width = 250;
       image.height = 150;
