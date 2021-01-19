@@ -165,6 +165,9 @@ devButton2.addEventListener("click", (evt) => {
 })
 //happens when the clock ticks every second.
 clock.addEventListener("tick", (evt) => {
+
+
+
   if (saveState.data.egg == -1) {
     feedPetButton.style.display = 'none';
     healthLabel.style.display = 'none';
@@ -534,15 +537,7 @@ clock.addEventListener("tick", (evt) => {
     }
 
 
-    //if 3000 min past the pet is starving!
-    if (lastSaveTime >= 3000) {
-      saveState.data.hunger = 100;
-      //update the current save state time.
-      saveState.data.saveTimer = new Date();
-      //update current save state.
-      fs.writeFileSync("save.txt", saveState, "json");
-
-    }
+   
 
     
 
