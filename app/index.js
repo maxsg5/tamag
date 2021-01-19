@@ -1,6 +1,6 @@
 import { setup, next } from 'fitbit-views';
 import view1 from './views/view1';
-
+import { test } from './test.js';
 //import view2 from './views/view-2';
 import document from "document";
 import * as fs from "fs";
@@ -11,6 +11,7 @@ import { outbox } from "file-transfer";
 import schedule from "fitbit-schedule/app"
 import { next } from 'fitbit-views';
 
+test();
 setup({
   //'view': null,
   //'view1': view1,
