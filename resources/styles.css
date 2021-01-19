@@ -76,8 +76,11 @@
 
 #storeButton {
   fill: magenta;
-  x: 150;
-  y: 300;
+  /* opacity: 0.3; */
+  x: 20;
+  y: 250;
+  height: 60;
+  width: 60;
 }
 
 #button-7 {
@@ -90,6 +93,11 @@
   href: "../resources/petImages/cookie.png";
   height: 18;
   width: 18;
+}
+.store-button #image {
+  href: "../resources/assets/store.png";
+  height: 100;
+  width: 100;
 }
 
 #cookies {

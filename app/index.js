@@ -120,9 +120,18 @@ if (appbit.appTimeoutEnabled) {
 setInterval(swapImageAnimator, animationSpeed);
 
 //event listeners
+//open and close the storePage
 storeButton.addEventListener("click", (evt) => {
-  mainPage.style.display = 'none';
-  storePage.style.display = 'inline';
+  //hide the store
+  if(mainPage.style.display == 'none'){
+    storePage.style.display = 'none';
+    mainPage.style.display = 'inline';
+  }
+  //show the store
+  else{
+    storePage.style.display = 'inline';
+    mainPage.style.display = 'none';
+  }
 })
 //button event.
 feedPetButton.addEventListener("click", (evt) => {
