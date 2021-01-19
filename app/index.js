@@ -1,6 +1,7 @@
 //import functions from animations.js
 import { sitAnimationRock } from './animations.js';
 import { sitAnimationShroom } from './animations.js';
+import { sitAnimationDino } from './animations.js';
 import { eggGreenAnimation1 } from './animations.js';
 import { eggGreenAnimation2 } from './animations.js';
 import { eggGreenAnimation3 } from './animations.js';
@@ -23,6 +24,8 @@ import { today } from "user-activity";
 
 //bind UI elements
 let list = document.getElementById("myList");
+let storeList = document.getElementById("storeList");
+let storeItems = storeList.getElementsByClassName("list-item");
 let items = list.getElementsByClassName("list-item");
 let image = document.getElementById('image');
 let background = document.getElementById('background');
@@ -34,10 +37,14 @@ let feedPetButton = document.getElementById('button-4');
 let devButton = document.getElementById('button-5');
 let devButton2 = document.getElementById('button-6');
 let devButton3 = document.getElementById('button-7');
+let storeButton = document.getElementById('storeButton');
 let healthBar = document.getElementById('healthBar');
+let storePage = document.getElementById('page3');
+let mainPage = document.getElementById('page2');
 
+//page2.style.display = 'none';
 //initialize UI elements and fitbit components
-
+storePage.style.display = 'none';
 devButton3.style.display = 'none';
 background.style.display = 'none';
 image.display = 'none';
@@ -80,6 +87,14 @@ items.forEach((element, index) => {
     saveState.data.egg = index;
   });
 });
+//event handler for the egg listbox selection.
+storeItems.forEach((element, index) => {
+  let touch = element.getElementById("touch");
+  touch.addEventListener("click", (evt) => {
+    console.log(`touched: ${index}`);
+
+  });
+});
 
 
 //check if there is saved data.
@@ -105,6 +120,10 @@ if (appbit.appTimeoutEnabled) {
 setInterval(swapImageAnimator, animationSpeed);
 
 //event listeners
+storeButton.addEventListener("click", (evt) => {
+  mainPage.style.display = 'none';
+  storePage.style.display = 'inline';
+})
 //button event.
 feedPetButton.addEventListener("click", (evt) => {
   console.log("Feed Pet.");
@@ -294,7 +313,7 @@ clock.addEventListener("tick", (evt) => {
     cookieLabel.style.display = 'block';
     feedPetButton.style.display = 'inline';
     hungerLabel.text = "Hunger:" + saveState.data.hunger;
-    healthLabel.text = "Health:" + saveState.data.health;
+    healthLabel.text = "Health:";
     walletLabel.text = "Wallet:" + saveState.data.wallet;
     cookieLabel.text = "Cookies:" + saveState.data.cookies;
 
@@ -529,9 +548,9 @@ clock.addEventListener("tick", (evt) => {
     }
 
 
-   
 
-    
+
+
 
     //if pet runs out of hunger health drops every min
     if (saveState.data.hunger == 100 && dieTime >= 1) {
@@ -544,10 +563,15 @@ clock.addEventListener("tick", (evt) => {
     }
   }
 
-
+  updateUI();
   //console.log("time since last hunger added " + hungerTime + " Min");
 });
 
+function updateUI() {
+  healthBar.width = saveState.data.health;
+
+
+}
 function checkSteps() {
   //check how many steps the user has taken.
   if (appbit.permissions.granted("access_activity")) {
@@ -570,51 +594,51 @@ function checkDate(date) {
 function swapImageAnimator() {
 
   switch (saveState.data.currentAnimation) {
-    
+
     case 'egg2':
-      animationFrame = eggPurpleAnimation1(image,animationFrame);
+      animationFrame = eggPurpleAnimation1(image, animationFrame);
       break;
     case 'egg2.1':
-      animationFrame = eggPurpleAnimation2(image,animationFrame);
+      animationFrame = eggPurpleAnimation2(image, animationFrame);
       break;
     case 'egg2.2':
-      animationFrame =eggPurpleAnimation3(image,animationFrame);
+      animationFrame = eggPurpleAnimation3(image, animationFrame);
       break;
     case 'egg2.3':
-      animationFrame =eggPurpleAnimation4(image,animationFrame);
+      animationFrame = eggPurpleAnimation4(image, animationFrame);
       break;
     case 'egg1':
-      animationFrame =eggOrangeAnimation1(image,animationFrame);
+      animationFrame = eggOrangeAnimation1(image, animationFrame);
       break;
     case 'egg1.1':
-      animationFrame =eggOrangeAnimation2(image,animationFrame);
+      animationFrame = eggOrangeAnimation2(image, animationFrame);
       break;
     case 'egg1.2':
-      animationFrame =eggOrangeAnimation3(image,animationFrame);
+      animationFrame = eggOrangeAnimation3(image, animationFrame);
       break;
     case 'egg1.3':
-      animationFrame = eggOrangeAnimation4(image,animationFrame);
+      animationFrame = eggOrangeAnimation4(image, animationFrame);
       break;
     case 'egg0':
-      animationFrame =eggGreenAnimation1(image,animationFrame);
+      animationFrame = eggGreenAnimation1(image, animationFrame);
       break;
     case 'egg0.1':
-      animationFrame =eggGreenAnimation2(image,animationFrame);
+      animationFrame = eggGreenAnimation2(image, animationFrame);
       break;
     case 'egg0.2':
-      animationFrame = eggGreenAnimation3(image,animationFrame);
+      animationFrame = eggGreenAnimation3(image, animationFrame);
       break;
     case 'egg0.3':
-      animationFrame = eggGreenAnimation4(image,animationFrame);
+      animationFrame = eggGreenAnimation4(image, animationFrame);
       break;
     case 'sit':
-      
+
       if (saveState.data.currentPet == 'shroom')
-      animationFrame = sitAnimationShroom(image,animationFrame);
+        animationFrame = sitAnimationShroom(image, animationFrame);
       if (saveState.data.currentPet == 'rock')
-        animationFrame = sitAnimationRock(image,animationFrame);
+        animationFrame = sitAnimationRock(image, animationFrame);
       if (saveState.data.currentPet == 'dino')
-      animationFrame = sitAnimationDino(image,animationFrame);
+        animationFrame = sitAnimationDino(image, animationFrame);
       break;
     case 'sleep':
       //sleepAnimation();
@@ -623,7 +647,7 @@ function swapImageAnimator() {
       //eatAnimation();
       break;
     case 'dead':
-      
+
       deadAnimation();
       break;
   }
