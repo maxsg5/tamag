@@ -1,6 +1,25 @@
 import { setup, next } from 'fitbit-views';
 import view1 from './views/view1';
-import { test } from './test.js';
+import { test } from './animations.js';
+import { sitAnimationRock } from './animations.js';
+import { sitAnimationShroom } from './animations.js';
+import { eggGreenAnimation1 } from './animations.js';
+import { eggGreenAnimation2 } from './animations.js';
+import { eggGreenAnimation3 } from './animations.js';
+import { eggGreenAnimation4 } from './animations.js';
+import { eggOrangeAnimation1 } from './animations.js';
+import { eggOrangeAnimation2 } from './animations.js';
+import { eggOrangeAnimation3 } from './animations.js';
+import { eggOrangeAnimation4 } from './animations.js';
+import { eggPurpleAnimation1 } from './animations.js';
+import { eggPurpleAnimation2 } from './animations.js';
+import { eggPurpleAnimation3 } from './animations.js';
+import { eggPurpleAnimation4 } from './animations.js';
+
+
+
+
+
 //import view2 from './views/view-2';
 import document from "document";
 import * as fs from "fs";
@@ -41,7 +60,6 @@ let devButton3 = document.getElementById('button-7');
 //devButton.style.display ='none';
 //devButton2.style.display ='none';
 devButton3.style.display = 'none';
-
 let healthBar = document.getElementById('healthBar');
 
 var lastSaveTime;
@@ -168,6 +186,7 @@ devButton2.addEventListener("click", (evt) => {
 clock.addEventListener("tick", (evt) => {
 
 
+  // TODO: COMPARTMENTALIZE THE GAME LOGIC
 
   if (saveState.data.egg == -1) {
     feedPetButton.style.display = 'none';
@@ -581,49 +600,49 @@ function swapImageAnimator() {
   switch (saveState.data.currentAnimation) {
     
     case 'egg2':
-      eggPurpleAnimation1();
+      animationFrame = eggPurpleAnimation1(image,animationFrame);
       break;
     case 'egg2.1':
-      eggPurpleAnimation2();
+      animationFrame = eggPurpleAnimation2(image,animationFrame);
       break;
     case 'egg2.2':
-      eggPurpleAnimation3();
+      animationFrame =eggPurpleAnimation3(image,animationFrame);
       break;
     case 'egg2.3':
-      eggPurpleAnimation4();
+      animationFrame =eggPurpleAnimation4(image,animationFrame);
       break;
     case 'egg1':
-      eggOrangeAnimation1();
+      animationFrame =eggOrangeAnimation1(image,animationFrame);
       break;
     case 'egg1.1':
-      eggOrangeAnimation2();
+      animationFrame =eggOrangeAnimation2(image,animationFrame);
       break;
     case 'egg1.2':
-      eggOrangeAnimation3();
+      animationFrame =eggOrangeAnimation3(image,animationFrame);
       break;
     case 'egg1.3':
-      eggOrangeAnimation4();
+      animationFrame = eggOrangeAnimation4(image,animationFrame);
       break;
     case 'egg0':
-      eggGreenAnimation1();
+      animationFrame =eggGreenAnimation1(image,animationFrame);
       break;
     case 'egg0.1':
-      eggGreenAnimation2();
+      animationFrame =eggGreenAnimation2(image,animationFrame);
       break;
     case 'egg0.2':
-      eggGreenAnimation3();
+      animationFrame = eggGreenAnimation3(image,animationFrame);
       break;
     case 'egg0.3':
-      eggGreenAnimation4();
+      animationFrame = eggGreenAnimation4(image,animationFrame);
       break;
     case 'sit':
       
       if (saveState.data.currentPet == 'shroom')
-        sitAnimationShroom();
+      animationFrame = sitAnimationShroom(image,animationFrame);
       if (saveState.data.currentPet == 'rock')
-        sitAnimationRock();
+        animationFrame = sitAnimationRock(image,animationFrame);
       if (saveState.data.currentPet == 'dino')
-        sitAnimationDino();
+      animationFrame = sitAnimationDino(image,animationFrame);
       break;
     case 'sleep':
       //sleepAnimation();
@@ -638,425 +657,7 @@ function swapImageAnimator() {
   }
 }
 
-function eggOrangeAnimation1() {
-  switch (animationFrame) {
-    case 1:
-      image.x = 60;
-      image.y = 90;
-      image.width = 200;
-      image.height = 200;
-      image.href = "../resources/eggImages/orangeEgg/sprite_0.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
 
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggOrangeAnimation2() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/orangeEgg/sprite_1.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggOrangeAnimation3() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/orangeEgg/sprite_2.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggOrangeAnimation4() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/orangeEgg/sprite_3.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggGreenAnimation1() {
-  switch (animationFrame) {
-    case 1:
-      image.x = 60;
-      image.y = 90;
-      image.width = 200;
-      image.height = 200;
-      image.href = "../resources/eggImages/greenEgg/sprite_0.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggGreenAnimation2() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/greenEgg/sprite_1.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggGreenAnimation3() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/greenEgg/sprite_2.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggGreenAnimation4() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/greenEgg/sprite_3.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-
-function eggPurpleAnimation1() {
-  switch (animationFrame) {
-    case 1:
-      image.x = 60;
-      image.y = 90;
-      image.width = 200;
-      image.height = 200;
-      image.href = "../resources/eggImages/purpleEgg/sprite_0.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggPurpleAnimation2() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/purpleEgg/sprite_1.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggPurpleAnimation3() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/purpleEgg/sprite_2.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-function eggPurpleAnimation4() {
-  switch (animationFrame) {
-    case 1:
-      image.href = "../resources/eggImages/purpleEgg/sprite_3.png";
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y + 5;
-
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y - 5;
-      animationFrame = 1;
-      break;
-  }
-}
-
-function sitAnimationDino() {
-  switch (animationFrame) {
-    case 1:
-      image.x = 75;
-      image.y = 100;
-      image.width = 200;
-      image.height = 200;
-      image.href = "../resources/petImages/tile000.png";
-      
-      animationFrame = 2;
-      break;
-    case 2:
-      image.href = "../resources/petImages/tile001.png";
-      animationFrame = 3;
-      break;
-    case 3:
-      image.href = "../resources/petImages/tile002.png";
-      animationFrame = 1;
-      break;
-
-
-  }
-}
-
-function sitAnimationShroom() {
-  switch (animationFrame) {
-    case 1:
-      image.x = -80;
-      
-      image.y = -40;
-      image.width = 500;
-      image.height = 500;
-      image.href = "../resources/mushroomImages/idle/sprite_00.png";
-      
-      animationFrame = 2;
-      break;
-    case 2:
-      image.href = "../resources/mushroomImages/idle/sprite_01.png";
-      animationFrame = 3;
-      break;
-    case 3:
-      image.href = "../resources/mushroomImages/idle/sprite_02.png";
-
-      animationFrame = 4;
-      break;
-    case 4:
-      image.href = "../resources/mushroomImages/idle/sprite_03.png";
-
-      animationFrame = 5;
-      break;
-    case 5:
-      image.href = "../resources/mushroomImages/idle/sprite_04.png";
-
-      animationFrame = 6;
-      break;
-    case 6:
-      image.href = "../resources/mushroomImages/idle/sprite_05.png";
-
-      animationFrame = 7;
-      break;
-    case 7:
-      image.href = "../resources/mushroomImages/idle/sprite_06.png";
-
-      animationFrame = 8;
-      break;
-    case 8:
-      image.href = "../resources/mushroomImages/idle/sprite_07.png";
-
-      animationFrame = 9;
-      break;
-    case 9:
-      image.href = "../resources/mushroomImages/idle/sprite_08.png";
-
-      animationFrame = 10;
-      break;
-    case 10:
-      image.href = "../resources/mushroomImages/idle/sprite_09.png";
-
-      animationFrame = 11;
-      break;
-    case 11:
-      image.href = "../resources/mushroomImages/idle/sprite_10.png";
-
-      animationFrame = 12;
-      break;
-    case 12:
-      image.href = "../resources/mushroomImages/idle/sprite_11.png";
-
-      animationFrame = 13;
-      break;
-    case 13:
-      image.href = "../resources/mushroomImages/idle/sprite_12.png";
-
-      animationFrame = 14;
-      break;
-    case 14:
-      image.href = "../resources/mushroomImages/idle/sprite_13.png";
-
-      animationFrame = 1;
-      break;
-  }
-}
-function sitAnimationRock() {
-  switch (animationFrame) {
-    case 1:
-      image.x = 95;
-      image.y = 100;
-      image.width = 150;
-      image.height = 150;
-      image.href = "../resources/rockImages/idle/sprite_00.png";
-      
-      animationFrame = 2;
-      break;
-    case 2:
-      image.href = "../resources/rockImages/idle/sprite_01.png";
-      animationFrame = 3;
-      break;
-    case 3:
-      image.href = "../resources/rockImages/idle/sprite_02.png";
-
-      animationFrame = 4;
-      break;
-    case 4:
-      image.href = "../resources/rockImages/idle/sprite_03.png";
-
-      animationFrame = 5;
-      break;
-    case 5:
-      image.href = "../resources/rockImages/idle/sprite_04.png";
-
-      animationFrame = 6;
-      break;
-    case 6:
-      image.href = "../resources/rockImages/idle/sprite_05.png";
-
-      animationFrame = 7;
-      break;
-    case 7:
-      image.href = "../resources/rockImages/idle/sprite_06.png";
-
-      animationFrame = 8;
-      break;
-    case 8:
-      image.href = "../resources/rockImages/idle/sprite_07.png";
-
-      animationFrame = 9;
-      break;
-    case 9:
-      image.href = "../resources/rockImages/idle/sprite_08.png";
-
-      animationFrame = 10;
-      break;
-    case 10:
-      image.href = "../resources/rockImages/idle/sprite_09.png";
-
-      animationFrame = 11;
-      break;
-    case 11:
-      image.href = "../resources/rockImages/idle/sprite_10.png";
-
-      animationFrame = 12;
-      break;
-    case 12:
-      image.href = "../resources/rockImages/idle/sprite_11.png";
-
-      animationFrame = 13;
-      break;
-    case 13:
-      image.href = "../resources/rockImages/idle/sprite_12.png";
-
-      animationFrame = 14;
-      break;
-    case 14:
-      image.href = "../resources/rockImages/idle/sprite_13.png";
-
-      animationFrame = 1;
-      break;
-  }
-}
-
-function deadAnimation() {
-  switch (animationFrame) {
-    case 1:
-      console.log("I'm dead...");
-      image.href = "../resources/petImages/dead.png";
-      image.width = 250;
-      image.height = 150;
-      image.x = 45;
-      image.y = 120;
-      animationFrame = 2;
-      break;
-    case 2:
-      image.y = image.y - 5;
-      animationFrame = 3;
-      break;
-    case 3:
-      image.y = image.y + 5;
-      animationFrame = 1;
-      break;
-  }
-}
 
 //user is closing the app.
 appbit.onunload = () => {
