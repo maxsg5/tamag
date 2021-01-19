@@ -1,7 +1,3 @@
-export function test() {
-    console.log("this is a test function");
-};
-
 export function sitAnimationRock(image,animationFrame) {
 
     switch (animationFrame) {
@@ -81,7 +77,6 @@ export function sitAnimationRock(image,animationFrame) {
     }
     return animationFrame;
   }
-
 export function sitAnimationShroom(image,animationFrame) {
     switch (animationFrame) {
       case 1:
@@ -161,7 +156,6 @@ export function sitAnimationShroom(image,animationFrame) {
     }
     return animationFrame;
   }
-
 export function sitAnimationDino(image,animationFrame) {
     switch (animationFrame) {
       case 1:
@@ -184,7 +178,6 @@ export function sitAnimationDino(image,animationFrame) {
     }
     return animationFrame;
   }
-
   export function eggOrangeAnimation1(image,animationFrame) {
     switch (animationFrame) {
       case 1:
@@ -337,7 +330,6 @@ export function sitAnimationDino(image,animationFrame) {
     }
     return animationFrame;
   }
-  
   export function eggPurpleAnimation1(image,animationFrame) {
     switch (animationFrame) {
       case 1:
@@ -414,12 +406,6 @@ export function sitAnimationDino(image,animationFrame) {
     }
     return animationFrame;
   }
-  
-  
-  
-  
-  
-  
   export function deadAnimation(image,animationFrame) {
     switch (animationFrame) {
       case 1:

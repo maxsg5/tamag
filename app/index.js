@@ -1,6 +1,4 @@
-import { setup, next } from 'fitbit-views';
-import view1 from './views/view1';
-import { test } from './animations.js';
+//import functions from animations.js
 import { sitAnimationRock } from './animations.js';
 import { sitAnimationShroom } from './animations.js';
 import { eggGreenAnimation1 } from './animations.js';
@@ -16,38 +14,18 @@ import { eggPurpleAnimation2 } from './animations.js';
 import { eggPurpleAnimation3 } from './animations.js';
 import { eggPurpleAnimation4 } from './animations.js';
 
-
-
-
-
-//import view2 from './views/view-2';
+//Fitbit imports
 import document from "document";
 import * as fs from "fs";
 import clock from "clock";
 import { me as appbit } from "appbit";
 import { today } from "user-activity";
-import { outbox } from "file-transfer";
-import schedule from "fitbit-schedule/app"
-import { next } from 'fitbit-views';
 
-test();
-setup({
-  //'view': null,
-  //'view1': view1,
-  //'view-2': view2,
-});
-
+//bind UI elements
 let list = document.getElementById("myList");
 let items = list.getElementsByClassName("list-item");
-
-let page2 = document.getElementById("page2");
-
-page2.display = 'none';
-
 let image = document.getElementById('image');
 let background = document.getElementById('background');
-background.style.display = 'none';
-image.display = 'none';
 let hungerLabel = document.getElementById('hunger');
 let healthLabel = document.getElementById('health');
 let walletLabel = document.getElementById('wallet');
@@ -56,17 +34,22 @@ let feedPetButton = document.getElementById('button-4');
 let devButton = document.getElementById('button-5');
 let devButton2 = document.getElementById('button-6');
 let devButton3 = document.getElementById('button-7');
-
-//devButton.style.display ='none';
-//devButton2.style.display ='none';
-devButton3.style.display = 'none';
 let healthBar = document.getElementById('healthBar');
 
+//initialize UI elements and fitbit components
+
+devButton3.style.display = 'none';
+background.style.display = 'none';
+image.display = 'none';
+clock.granularity = "seconds"; // seconds, minutes, hours
+//uncomment to hide dev buttons.
+//devButton.style.display ='none'; 
+//devButton2.style.display ='none';
+
+//declare variables
 var lastSaveTime;
 var hungerTime;
 var dieTime;
-
-
 var animationSpeed = 150;
 var animationFrame = 1;
 
@@ -88,14 +71,13 @@ var saveState = {
   }
 };
 
-
+//event handler for the egg listbox selection.
 items.forEach((element, index) => {
   let touch = element.getElementById("touch");
   touch.addEventListener("click", (evt) => {
     console.log(`touched: ${index}`);
     list.style.display = 'none';
     saveState.data.egg = index;
-    //page2.display = 'initial';
   });
 });
 
@@ -104,7 +86,6 @@ items.forEach((element, index) => {
 if (fs.existsSync("/private/data/save.txt")) {
   //load any saved data to variables.
   saveState = fs.readFileSync("save.txt", "json");
-  //console.log("saved data: Hunger:" + saveState.data.hunger + ", Wallet:" + saveState.data.wallet + ", health:" + saveState.data.health + ", TimeStamp:" + saveState.data.saveTimer);
   console.log("time since last save " + checkDate(new Date(saveState.data.saveTimer)) * -1 + " Min");
 }
 //if there is no saved data. We must start a new game.
@@ -118,13 +99,6 @@ if (appbit.appTimeoutEnabled) {
   console.log("Timeout is enabled");
 }
 //appbit.appTimeoutEnabled = false; // Disable timeout
-
-
-
-
-clock.granularity = "seconds"; // seconds, minutes, hours
-
-//initialize UI
 
 
 //animate the pet.
@@ -147,8 +121,6 @@ feedPetButton.addEventListener("click", (evt) => {
   }
 })
 devButton.addEventListener("click", (evt) => {
-
-
   saveState.data.hunger = 100;
   //saveState.data.health = 0;
 })
@@ -666,17 +638,6 @@ appbit.onunload = () => {
   saveState.data.saveTimer = new Date();
   //update current save state.
   fs.writeFileSync("save.txt", saveState, "json");
-
-
-  //     outbox
-  //   .enqueueFile("/private/data/save.txt")
-  //   .then(ft => {
-  //     console.log(`Transfer of ${ft.name} successfully queued.`);
-  //   })
-  //   .catch(err => {
-  //     console.log(`Failed to schedule transfer: ${err}`);
-  //   })
-
 }
 
 
