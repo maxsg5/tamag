@@ -40,7 +40,6 @@ let devButton3 = document.getElementById('button-7');
 let storeButton = document.getElementById('storeButton');
 let healthBar = document.getElementById('healthBar');
 let healthCircle = document.getElementById('arc');
-
 let storePage = document.getElementById('page3');
 let mainPage = document.getElementById('page2');
 
