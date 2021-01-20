@@ -39,6 +39,8 @@ let devButton2 = document.getElementById('button-6');
 let devButton3 = document.getElementById('button-7');
 let storeButton = document.getElementById('storeButton');
 let healthBar = document.getElementById('healthBar');
+let healthCircle = document.getElementById('arc');
+
 let storePage = document.getElementById('page3');
 let mainPage = document.getElementById('page2');
 
@@ -87,7 +89,7 @@ items.forEach((element, index) => {
     saveState.data.egg = index;
   });
 });
-//event handler for the egg listbox selection.
+//event handler for the store listbox selection.
 storeItems.forEach((element, index) => {
   let touch = element.getElementById("touch");
   touch.addEventListener("click", (evt) => {
@@ -578,6 +580,7 @@ clock.addEventListener("tick", (evt) => {
 
 function updateUI() {
   healthBar.width = saveState.data.health;
+  //healthCircle.groupTransform.angle += 0.28;
 
 
 }
