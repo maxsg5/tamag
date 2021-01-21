@@ -8,10 +8,10 @@
     <link rel="import" href="/mnt/sysassets/widgets/baseview_widget.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/scrollbar.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/tile_list_widget.defs" />
-    <!-- <symbol id="my-header" href="#tile-list-header" class="list-item  header">
+    <symbol id="my-header" href="#tile-list-header" class="list-item  header">
       <text id="text" />
       <rect class="line" />
-    </symbol> -->
+    </symbol>
     <symbol id="my-item" href="#tile-list-item" class="list-item">
       <rect class="bg" />
       <text id="text" />

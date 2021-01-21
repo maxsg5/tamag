@@ -3,19 +3,21 @@
   <svg id="page1">
     <use id="myList" href="#tile-list" class="horizontal-pad">
       <var id="separator-height-bottom" value="6" />
-
       <use id="item1" href="#my-item">
-        <image id="image1" x="25%" y="0" width="50%" height="100%"
+        <set href="#text" attributeName="text-buffer" to="CHOOSE A MAGIC EGG" />
+      </use>
+      <use id="item2" href="#my-item">
+        <image id="image1" x="75" y="-20" width="50%" height="150%"
           href="../resources/eggImages/greenEgg/sprite_0.png" />
 
         <!-- <set href="#text" attributeName="text-buffer" to="Text Item 1" /> -->
       </use>
-      <use id="item2" href="#my-item">
-        <image id="image2" x="25%" y="0" width="50%" height="100%"
+      <use id="item3" href="#my-item">
+        <image id="image2" x="75" y="-20" width="50%" height="150%"
           href="../resources/eggImages/orangeEgg/sprite_0.png" />
       </use>
-      <use id="item3" href="#my-item">
-        <image id="image3" x="25%" y="0" width="50%" height="100%"
+      <use id="item4" href="#my-item">
+        <image id="image3" x="75" y="-20" width="50%" height="150%"
           href="../resources/eggImages/purpleEgg/sprite_0.png" />
       </use>
     </use>
@@ -34,13 +36,13 @@
     <rect id="hungerBar" class="info-bar-hunger" fill="black" />
     <image id="image" x="0" y="10" width="100%" height="100%" href="" />
     <use id="button-4" href="#icon-button" class="small-button application-fill plus-button" />
-    
+
     <!-- <circle id="healthCircle" cx="82" cy="60" r="5" fill="fb-black" /> -->
     <!-- Arc - transform animation -->
     <!-- <g id="arc" transform="translate(50%, 50%)"> -->
-      <!-- <arc id="healthCircle" x="-100" y="-100" width="200" height="200" fill="crimson" arc-width="20" start-angle="0" sweep-angle="0"> -->
-        <!-- <animate attributeName="sweep-angle" begin="load" from="0" to="360" dur="2" final="restore" repeatCount="indefinite" /> -->
-      <!-- </arc> -->
+    <!-- <arc id="healthCircle" x="-100" y="-100" width="200" height="200" fill="crimson" arc-width="20" start-angle="0" sweep-angle="0"> -->
+    <!-- <animate attributeName="sweep-angle" begin="load" from="0" to="360" dur="2" final="restore" repeatCount="indefinite" /> -->
+    <!-- </arc> -->
     <!-- </g> -->
     <!-- Circle - Begining of arc (not animated) -->
     <!-- <circle cx="50%" cy="50%-90" r="10" fill="crimson" /> -->

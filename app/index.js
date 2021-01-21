@@ -74,6 +74,10 @@ var hungerTime;
 var dieTime;
 var animationSpeed = 150;
 var animationFrame = 1;
+var eggStage0 = 10;
+var eggStage1 = 20;
+var eggStage2 = 30;
+var eggStage3 = 40;
 
 //initial game start data.
 var saveState = {
@@ -99,10 +103,15 @@ items.forEach((element, index) => {
   let touch = element.getElementById("touch");
   touch.addEventListener("click", (evt) => {
     console.log(`touched: ${index}`);
+    if(index > 0){
     list.style.display = 'none';
-    saveState.data.egg = index;
+    saveState.data.egg = index-1;
     //initialize the offset for starting the tracking of step count.
     saveState.data.steps = today.adjusted.steps;
+    }
+    else{
+      return;
+    }
   });
 });
 //event handler for the store listbox selection.
@@ -245,7 +254,7 @@ clock.addEventListener("tick", (evt) => {
     feedPetButton.style.display = 'none';
     walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg0';
-    if (saveState.data.wallet >= 50)
+    if (saveState.data.wallet >= eggStage0)
       saveState.data.egg = 0.1;
   }
   else if (saveState.data.egg == 1) {
@@ -253,7 +262,7 @@ clock.addEventListener("tick", (evt) => {
     feedPetButton.style.display = 'none';
     walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg1';
-    if (saveState.data.wallet >= 50)
+    if (saveState.data.wallet >= eggStage0)
       saveState.data.egg = 1.1;
   }
   else if (saveState.data.egg == 2) {
@@ -261,42 +270,42 @@ clock.addEventListener("tick", (evt) => {
     feedPetButton.style.display = 'none';
     walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg2';
-    if (saveState.data.wallet >= 50)
+    if (saveState.data.wallet >= eggStage0)
       saveState.data.egg = 2.1;
   }
   else if (saveState.data.egg == 0.1) {
     saveState.data.currentAnimation = 'egg0.1';
-    if (saveState.data.wallet >= 100)
+    if (saveState.data.wallet >= eggStage1)
       saveState.data.egg = 0.2;
   }
   else if (saveState.data.egg == 1.1) {
     saveState.data.currentAnimation = 'egg1.1';
-    if (saveState.data.wallet >= 100)
+    if (saveState.data.wallet >= eggStage1)
       saveState.data.egg = 1.2;
   }
   else if (saveState.data.egg == 2.1) {
     saveState.data.currentAnimation = 'egg2.1';
-    if (saveState.data.wallet >= 100)
+    if (saveState.data.wallet >= eggStage1)
       saveState.data.egg = 2.2;
   }
   else if (saveState.data.egg == 0.2) {
     saveState.data.currentAnimation = 'egg0.2';
-    if (saveState.data.wallet >= 150)
+    if (saveState.data.wallet >= eggStage2)
       saveState.data.egg = 0.3;
   }
   else if (saveState.data.egg == 1.2) {
     saveState.data.currentAnimation = 'egg1.2';
-    if (saveState.data.wallet >= 150)
+    if (saveState.data.wallet >= eggStage2)
       saveState.data.egg = 1.3;
   }
   else if (saveState.data.egg == 2.2) {
     saveState.data.currentAnimation = 'egg2.2';
-    if (saveState.data.wallet >= 150)
+    if (saveState.data.wallet >= eggStage2)
       saveState.data.egg = 2.3;
   }
   else if (saveState.data.egg == 0.3) {
     saveState.data.currentAnimation = 'egg0.3';
-    if (saveState.data.wallet >= 200) {
+    if (saveState.data.wallet >= eggStage3) {
       saveState.data.egg = null;
       saveState.data.currentAnimation = 'sit';
       saveState.data.wallet = 0;
@@ -305,7 +314,7 @@ clock.addEventListener("tick", (evt) => {
   }
   else if (saveState.data.egg == 1.3) {
     saveState.data.currentAnimation = 'egg1.3';
-    if (saveState.data.wallet >= 200) {
+    if (saveState.data.wallet >= eggStage3) {
       saveState.data.egg = null;
       saveState.data.currentAnimation = 'sit';
       saveState.data.currentPet = 'rock';
@@ -314,7 +323,7 @@ clock.addEventListener("tick", (evt) => {
   }
   else if (saveState.data.egg == 2.3) {
     saveState.data.currentAnimation = 'egg2.3';
-    if (saveState.data.wallet >= 200) {
+    if (saveState.data.wallet >= eggStage3) {
       saveState.data.egg = null;
       saveState.data.currentAnimation = 'sit';
       saveState.data.currentPet = 'shroom';
