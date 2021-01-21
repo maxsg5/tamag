@@ -334,6 +334,7 @@ clock.addEventListener("tick", (evt) => {
   //EGG LOGIC END ---------------------------------------------------
 
   else {
+    storeButton.style.display = 'inline';
     healthBar.style.display = 'inline';
     hungerBar.style.display = 'inline';
     borderBarHealth.style.display = 'inline';
