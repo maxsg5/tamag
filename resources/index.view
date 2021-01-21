@@ -59,14 +59,17 @@
       <var id="separator-height-bottom" value="6" />
 
       <use id="item1" href="#my-item">
+        <set href="#text" attributeName="text-buffer" to="CHOOSE A MAGIC EGG" />
+      </use>
+      <use id="item2" href="#my-item">
         <image id="image1" x="25%" y="0" width="50%" height="100%" href="../resources/petImages/cookie.png" />
 
         <!-- <set href="#text" attributeName="text-buffer" to="Text Item 1" /> -->
       </use>
-      <use id="item2" href="#my-item">
+      <use id="item3" href="#my-item">
         <image id="image2" x="25%" y="0" width="50%" height="100%" href="../resources/petImages/cookie.png" />
       </use>
-      <use id="item3" href="#my-item">
+      <use id="item4" href="#my-item">
         <image id="image3" x="25%" y="0" width="50%" height="100%" href="../resources/petImages/cookie.png" />
       </use>
     </use>

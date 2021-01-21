@@ -140,7 +140,7 @@ else {
 if (appbit.appTimeoutEnabled) {
   console.log("Timeout is enabled");
 }
-//appbit.appTimeoutEnabled = false; // Disable timeout
+appbit.appTimeoutEnabled = false; // Disable timeout
 
 
 //animate the pet.
@@ -151,11 +151,13 @@ setInterval(swapImageAnimator, animationSpeed);
 storeButton.addEventListener("click", (evt) => {
   //hide the store
   if (mainPage.style.display == 'none') {
+    background.style.display = 'inline';
     storePage.style.display = 'none';
     mainPage.style.display = 'inline';
   }
   //show the store
   else {
+    background.style.display = 'none';
     storePage.style.display = 'inline';
     mainPage.style.display = 'none';
   }
