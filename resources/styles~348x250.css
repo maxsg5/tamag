@@ -44,6 +44,15 @@
     fill: green;
   }
   
+  #steps {
+    font-size: 15;
+    font-family: System-Bold;
+    text-length: 32;
+    text-anchor: start;
+    x: 10%;
+    y: 30%;
+    fill: purple;
+  }
   .info-bar {
     width: 100;
     height: 2%;

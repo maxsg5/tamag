@@ -14,6 +14,8 @@ import { eggPurpleAnimation1 } from './animations.js';
 import { eggPurpleAnimation2 } from './animations.js';
 import { eggPurpleAnimation3 } from './animations.js';
 import { eggPurpleAnimation4 } from './animations.js';
+import { deadAnimation } from './animations.js';
+
 
 //Fitbit imports
 import document from "document";
@@ -32,6 +34,8 @@ let background = document.getElementById('background');
 let hungerLabel = document.getElementById('hunger');
 let healthLabel = document.getElementById('health');
 let walletLabel = document.getElementById('wallet');
+let stepsLabel = document.getElementById('steps');
+stepsLabel.style.display = 'none';
 let cookieLabel = document.getElementById('cookies');
 let feedPetButton = document.getElementById('button-4');
 let devButton = document.getElementById('button-5');
@@ -39,6 +43,14 @@ let devButton2 = document.getElementById('button-6');
 let devButton3 = document.getElementById('button-7');
 let storeButton = document.getElementById('storeButton');
 let healthBar = document.getElementById('healthBar');
+let hungerBar = document.getElementById('hungerBar');
+let borderBarHealth = document.getElementById('borderBarHealth');
+let borderBarHunger = document.getElementById('borderBarHunger');
+healthBar.style.display = 'none';
+hungerBar.style.display = 'none';
+borderBarHealth.style.display = 'none';
+borderBarHunger.style.display = 'none';
+
 let healthCircle = document.getElementById('arc');
 let storePage = document.getElementById('page3');
 let mainPage = document.getElementById('page2');
@@ -68,6 +80,7 @@ var saveState = {
   "data": {
     "hunger": 0,
     "wallet": 0,
+    "steps": 0,
     "health": 2,
     "saveTimer": new Date(),
     "hungerTimer": new Date(),
@@ -88,6 +101,8 @@ items.forEach((element, index) => {
     console.log(`touched: ${index}`);
     list.style.display = 'none';
     saveState.data.egg = index;
+    //initialize the offset for starting the tracking of step count.
+    saveState.data.steps = today.adjusted.steps;
   });
 });
 //event handler for the store listbox selection.
@@ -126,12 +141,12 @@ setInterval(swapImageAnimator, animationSpeed);
 //open and close the storePage
 storeButton.addEventListener("click", (evt) => {
   //hide the store
-  if(mainPage.style.display == 'none'){
+  if (mainPage.style.display == 'none') {
     storePage.style.display = 'none';
     mainPage.style.display = 'inline';
   }
   //show the store
-  else{
+  else {
     storePage.style.display = 'inline';
     mainPage.style.display = 'none';
   }
@@ -162,6 +177,7 @@ devButton3.addEventListener("click", (evt) => {
     "data": {
       "hunger": 0,
       "wallet": 0,
+      "steps": 0,
       "health": 2,
       "saveTimer": new Date(),
       "hungerTimer": new Date(),
@@ -189,6 +205,8 @@ devButton2.addEventListener("click", (evt) => {
 //happens when the clock ticks every second.
 clock.addEventListener("tick", (evt) => {
 
+  console.log("steps: " + saveState.data.steps);
+  console.log("wallet: " + saveState.data.wallet);
 
   // TODO: COMPARTMENTALIZE THE GAME LOGIC
 
@@ -214,20 +232,20 @@ clock.addEventListener("tick", (evt) => {
     return;
   }
 
-  
+
   //if we reach this point the game is in progress as either an egg or creature.
-  
+
   //hide the start page and show the main Page.
   mainPage.style.display = 'inline';
   startPage.style.display = 'none';
-  
 
+  //EGG LOGIC ---------------------------------------------------
   if (saveState.data.egg == 0) {
     background.style.display = 'inline';
     feedPetButton.style.display = 'none';
     walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg0';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 50)
       saveState.data.egg = 0.1;
   }
   else if (saveState.data.egg == 1) {
@@ -235,7 +253,7 @@ clock.addEventListener("tick", (evt) => {
     feedPetButton.style.display = 'none';
     walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg1';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 50)
       saveState.data.egg = 1.1;
   }
   else if (saveState.data.egg == 2) {
@@ -243,90 +261,77 @@ clock.addEventListener("tick", (evt) => {
     feedPetButton.style.display = 'none';
     walletLabel.style.display = 'inline';
     saveState.data.currentAnimation = 'egg2';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 50)
       saveState.data.egg = 2.1;
   }
   else if (saveState.data.egg == 0.1) {
     saveState.data.currentAnimation = 'egg0.1';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 100)
       saveState.data.egg = 0.2;
   }
   else if (saveState.data.egg == 1.1) {
     saveState.data.currentAnimation = 'egg1.1';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 100)
       saveState.data.egg = 1.2;
   }
   else if (saveState.data.egg == 2.1) {
     saveState.data.currentAnimation = 'egg2.1';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 100)
       saveState.data.egg = 2.2;
   }
   else if (saveState.data.egg == 0.2) {
     saveState.data.currentAnimation = 'egg0.2';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 150)
       saveState.data.egg = 0.3;
   }
   else if (saveState.data.egg == 1.2) {
     saveState.data.currentAnimation = 'egg1.2';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 150)
       saveState.data.egg = 1.3;
   }
   else if (saveState.data.egg == 2.2) {
     saveState.data.currentAnimation = 'egg2.2';
-    if (saveState.data.wallet >= 0)
+    if (saveState.data.wallet >= 150)
       saveState.data.egg = 2.3;
   }
   else if (saveState.data.egg == 0.3) {
     saveState.data.currentAnimation = 'egg0.3';
-    if (saveState.data.wallet >= 0) {
+    if (saveState.data.wallet >= 200) {
       saveState.data.egg = null;
       saveState.data.currentAnimation = 'sit';
       saveState.data.wallet = 0;
       saveState.data.currentPet = 'dino';
-      feedPetButton.style.display = 'inline';
-      healthLabel.style.display = 'inline';
-      cookieLabel.style.display = 'inline';
-      hungerLabel.style.display = 'inline';
-      walletLabel.style.display = 'inline';
-
     }
   }
   else if (saveState.data.egg == 1.3) {
     saveState.data.currentAnimation = 'egg1.3';
-    if (saveState.data.wallet >= 0) {
+    if (saveState.data.wallet >= 200) {
       saveState.data.egg = null;
       saveState.data.currentAnimation = 'sit';
       saveState.data.currentPet = 'rock';
       saveState.data.wallet = 0;
-      feedPetButton.style.display = 'inline';
-      healthLabel.style.display = 'inline';
-      cookieLabel.style.display = 'inline';
-      hungerLabel.style.display = 'inline';
-      walletLabel.style.display = 'inline';
-
     }
   }
   else if (saveState.data.egg == 2.3) {
     saveState.data.currentAnimation = 'egg2.3';
-    if (saveState.data.wallet >= 0) {
+    if (saveState.data.wallet >= 200) {
       saveState.data.egg = null;
       saveState.data.currentAnimation = 'sit';
       saveState.data.currentPet = 'shroom';
       saveState.data.wallet = 0;
-      feedPetButton.style.display = 'inline';
-      healthLabel.style.display = 'inline';
-      cookieLabel.style.display = 'inline';
-      hungerLabel.style.display = 'inline';
-      walletLabel.style.display = 'inline';
-
     }
   }
 
+  //EGG LOGIC END ---------------------------------------------------
 
   else {
+    healthBar.style.display = 'inline';
+    hungerBar.style.display = 'inline';
+    borderBarHealth.style.display = 'inline';
+    borderBarHunger.style.display = 'inline';
     cookieLabel.style.display = 'block';
     feedPetButton.style.display = 'inline';
-    hungerLabel.text = "Hunger:" + saveState.data.hunger;
+    hungerLabel.text = "Hunger:";
     healthLabel.text = "Health:";
     walletLabel.text = "Wallet:" + saveState.data.wallet;
     cookieLabel.text = "Cookies:" + saveState.data.cookies;
@@ -583,19 +588,20 @@ clock.addEventListener("tick", (evt) => {
 
 function updateUI() {
   healthBar.width = saveState.data.health;
+  hungerBar.width = saveState.data.hunger;
   //healthCircle.groupTransform.angle += 0.28;
   checkSteps();
-  walletLabel.text = "steps:" + saveState.data.wallet;
-
+  walletLabel.text = "wallet: " + saveState.data.wallet;
+  stepsLabel.text = "steps: " + saveState.data.steps;
 }
+
+//check how many steps the user has taken.
 function checkSteps() {
-  //check how many steps the user has taken.
   if (appbit.permissions.granted("access_activity")) {
     //update the user's wallet with steps.
-    var stepDif = today.adjusted.steps - saveState.data.wallet;
+    var stepDif = today.adjusted.steps - saveState.data.steps;
     saveState.data.wallet += stepDif;
-    //console.log(minuteHistory[0]);
-
+    saveState.data.steps = today.adjusted.steps;
   }
 }
 
@@ -664,7 +670,7 @@ function swapImageAnimator() {
       break;
     case 'dead':
 
-      deadAnimation();
+      animationFrame = deadAnimation(image, animationFrame);
       break;
   }
 }

@@ -26,9 +26,12 @@
     <text id="hunger" />
     <text id="health" />
     <text id="wallet" />
+    <text id="steps" />
     <text id="cookies" />
-    <rect id="borderBar" class="border-bar" />
-    <rect id="healthBar" class="info-bar" fill="fb-red" />
+    <rect id="borderBarHealth" class="border-bar-health" />
+    <rect id="healthBar" class="info-bar" fill="green" />
+    <rect id="borderBarHunger" class="border-bar-hunger" />
+    <rect id="hungerBar" class="info-bar-hunger" fill="black" />
     <image id="image" x="0" y="10" width="100%" height="100%" href="" />
     <use id="button-4" href="#icon-button" class="small-button application-fill plus-button" />
     
