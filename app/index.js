@@ -42,13 +42,15 @@ let healthBar = document.getElementById('healthBar');
 let healthCircle = document.getElementById('arc');
 let storePage = document.getElementById('page3');
 let mainPage = document.getElementById('page2');
+let startPage = document.getElementById('page1');
+
 
 //page2.style.display = 'none';
 //initialize UI elements and fitbit components
 storePage.style.display = 'none';
 devButton3.style.display = 'none';
-background.style.display = 'none';
-image.display = 'none';
+
+
 clock.granularity = "seconds"; // seconds, minutes, hours
 //uncomment to hide dev buttons.
 //devButton.style.display ='none'; 
@@ -153,6 +155,7 @@ devButton.addEventListener("click", (evt) => {
   saveState.data.hunger = 100;
   //saveState.data.health = 0;
 })
+//create new Game.
 devButton3.addEventListener("click", (evt) => {
 
   saveState = {
@@ -189,13 +192,12 @@ clock.addEventListener("tick", (evt) => {
 
   // TODO: COMPARTMENTALIZE THE GAME LOGIC
 
+  // check if user has not selected an egg.
   if (saveState.data.egg == -1) {
-    feedPetButton.style.display = 'none';
-    healthLabel.style.display = 'none';
-    cookieLabel.style.display = 'none';
-    hungerLabel.style.display = 'none';
-    walletLabel.style.display = 'none';
-    background.style.display = 'none';
+    mainPage.style.display = 'none';
+    startPage.style.display = 'inline';
+    storePage.style.display = 'none';
+    storeButton.style.display = 'none';
     return;
   }
 
@@ -209,14 +211,16 @@ clock.addEventListener("tick", (evt) => {
     hungerLabel.style.display = 'none';
     walletLabel.style.display = 'none';
     devButton3.style.display = 'inline';
-
     return;
   }
-  list.style.display = 'none'
-  image.style.display = 'inline';
-  background.style.display = 'inline';
-  checkSteps();
-  walletLabel.text = "steps:" + saveState.data.wallet;
+
+  
+  //if we reach this point the game is in progress as either an egg or creature.
+  
+  //hide the start page and show the main Page.
+  mainPage.style.display = 'inline';
+  startPage.style.display = 'none';
+  
 
   if (saveState.data.egg == 0) {
     background.style.display = 'inline';
@@ -580,7 +584,8 @@ clock.addEventListener("tick", (evt) => {
 function updateUI() {
   healthBar.width = saveState.data.health;
   //healthCircle.groupTransform.angle += 0.28;
-
+  checkSteps();
+  walletLabel.text = "steps:" + saveState.data.wallet;
 
 }
 function checkSteps() {
