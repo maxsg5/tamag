@@ -1,0 +1,43 @@
+#menuPage{
+    display: none;
+}
+#feedPetBtn {
+    fill: cornflowerblue;
+    x: 40;
+    y: 60;
+  }
+  
+  #storeBtn {
+    fill: magenta;
+    x: 140;
+    y: 60;
+  }
+  
+  #btn2 {
+    fill: green;
+    x: 240;
+    y: 60;
+  }
+  #btn3 {
+    fill: yellow;
+    x: 240;
+    y: 160;
+  }#btn4 {
+    fill: orange;
+    x: 140;
+    y: 160;
+  }#btn5 {
+    fill: red;
+    x: 40;
+    y: 160;
+  }
+  
+  #backBtn{
+    fill:white;
+    /* y: 340; */
+  }
+  #backBtn #text {
+    fill: darkgray;
+    text-buffer: "BACK";
+  }
+  

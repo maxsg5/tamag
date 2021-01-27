@@ -1,96 +1,9 @@
 /* 348x250 Ionic */
 /* Versa, Versa Lite, and Versa 2 are square shaped. 300x300 pixels. */
 /* Versa 3, and Sense are squircle shaped. 336x336 pixels. */
-.defaultText {
-  font-size: 32;
-  font-family: System-Regular;
-  font-weight: regular;
-  text-length: 32;
-}
 
-#background {
-  width: 100%;
-  height: 100%;
-  fill: white;
-}
 
-#hunger {
-  font-size: 15;
-  font-family: System-Bold;
-  text-length: 32;
-  text-anchor: start;
-  x: 10%;
-  y: 15%;
-  fill: black;
-}
 
-#health {
-  font-size: 15;
-  font-family: System-Bold;
-  text-length: 32;
-  text-anchor: start;
-  x: 10%+3;
-  y: 20%;
-  fill: green;
-}
-
-#wallet {
-  font-size: 15;
-  font-family: System-Bold;
-  text-length: 32;
-  text-anchor: start;
-  x: 10%+6;
-  y: 25%;
-  fill: mediumseagreen;
-}
-
-#steps {
-  font-size: 15;
-  font-family: System-Bold;
-  text-length: 32;
-  text-anchor: start;
-  x: 10%+10;
-  y: 30%;
-  fill: purple;
-}
-.info-bar {
-  width: 100;
-  height: 2%;
-  x: 85;
-  y: 60;
-  border-style: solid;
-}
-.info-bar-hunger {
-  width: 100;
-  height: 2%;
-  x: 85;
-  y: 43;
-  border-style: solid;
-}
-.border-bar-health {
-  width: 100;
-  height: 2%;
-  x: 85;
-  y: 60;
-  border-style: dotted;
-  border-width: 0.5px;
-  fill: red;
-}
-.border-bar-hunger {
-  width: 100;
-  height: 2%;
-  x: 85;
-  y: 43;
-  border-style: dotted;
-  border-width: 0.5px;
-  fill: lightgray;
-}
-
-#button-4 {
-  fill: cornflowerblue;
-  x: 230;
-  y: 40;
-}
 #button-5 {
   fill: red;
   x: 230;
@@ -102,7 +15,7 @@
   y: 300;
 }
 
-#storeButton {
+#menuBtn {
   fill: magenta;
   /* opacity: 0.3; */
   x: 20;
@@ -138,37 +51,3 @@
   fill: cornflowerblue;
 }
 
-.list-item {
-  height: 80;
-}
-
-.list-item text {
-  fill: "white";
-  text-anchor: middle;
-  x: 50%;
-  font-size: 24;
-  text-length: 20;
-}
-
-.line {
-  width: 100%;
-  height: 6;
-  fill: #222222;
-  y: 100%-6;
-}
-
-.bg {
-  fill: #111111;
-  width: 100%;
-  height: 100%;
-  x: 0;
-  y: 0;
-}
-
-#touch {
-  width: 100%;
-  height: 100%-6;
-  x: 0;
-  y: 0;
-  opacity: 0;
-}

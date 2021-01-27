@@ -1,6 +1,12 @@
 <svg>
   <defs>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="startPage.css" />
+    <link rel="stylesheet" href="page3.css" />
+    <link rel="stylesheet" href="page2.css" />
+    <link rel="stylesheet" href="menuPage.css" />
+
+
     <link rel="import" href="/mnt/sysassets/system_widget.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/text_button.defs" />
     <link rel="import" href="/mnt/sysassets/widgets/icon_button.defs" />

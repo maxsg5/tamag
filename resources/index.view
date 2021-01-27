@@ -74,7 +74,20 @@
       </use>
     </use>
   </svg>
-  <use id="storeButton" href="#icon-button" class="medium-button application-fill store-button " />
+
+  <svg id="menuPage">
+    <text fill="white" x="40%" y="40" font-family="System-Regular">Menu</text>
+    <line x1="10" y1="50" x2="100%-10" y2="50" fill="white" stroke-width="2" />
+    <use id="feedPetBtn" href="#icon-button" class="medium-button application-fill feedPet-button" />
+    <use id="storeBtn" href="#icon-button" class="medium-button application-fill store-button" />
+    <use id="btn2" href="#icon-button" class="medium-button application-fill temp2-button" />
+    <use id="btn3" href="#icon-button" class="medium-button application-fill temp2-button" />
+    <use id="btn4" href="#icon-button" class="medium-button application-fill temp2-button" />
+    <use id="btn5" href="#icon-button" class="medium-button application-fill temp2-button" />
+    <use id="backBtn" href="#text-button" class="text-button bottom application-fill" />
+  </svg>
+
+  <use id="menuBtn" href="#icon-button" class="medium-button application-fill menu-button " />
 
   <!-- <use id="button-1" href="#text-button" class="text-button bottom application-fill" /> -->
   <use id="button-5" href="#icon-button" class="small-button application-fill " />

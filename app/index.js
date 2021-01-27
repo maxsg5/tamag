@@ -41,7 +41,7 @@ let feedPetButton = document.getElementById('button-4');
 let devButton = document.getElementById('button-5');
 let devButton2 = document.getElementById('button-6');
 let devButton3 = document.getElementById('button-7');
-let storeButton = document.getElementById('storeButton');
+let menuButton = document.getElementById('menuBtn');
 let healthBar = document.getElementById('healthBar');
 let hungerBar = document.getElementById('hungerBar');
 let borderBarHealth = document.getElementById('borderBarHealth');
@@ -55,6 +55,7 @@ let healthCircle = document.getElementById('arc');
 let storePage = document.getElementById('page3');
 let mainPage = document.getElementById('page2');
 let startPage = document.getElementById('page1');
+let menuPage = document.getElementById('menuPage');
 
 
 //page2.style.display = 'none';
@@ -78,7 +79,7 @@ var eggStage0 = 10;
 var eggStage1 = 20;
 var eggStage2 = 30;
 var eggStage3 = 40;
-
+var menuOpen = false;
 //initial game start data.
 var saveState = {
   "data": {
@@ -103,13 +104,13 @@ items.forEach((element, index) => {
   let touch = element.getElementById("touch");
   touch.addEventListener("click", (evt) => {
     console.log(`touched: ${index}`);
-    if(index > 0){
-    list.style.display = 'none';
-    saveState.data.egg = index-1;
-    //initialize the offset for starting the tracking of step count.
-    saveState.data.steps = today.adjusted.steps;
+    if (index > 0) {
+      list.style.display = 'none';
+      saveState.data.egg = index - 1;
+      //initialize the offset for starting the tracking of step count.
+      saveState.data.steps = today.adjusted.steps;
     }
-    else{
+    else {
       return;
     }
   });
@@ -148,18 +149,21 @@ setInterval(swapImageAnimator, animationSpeed);
 
 //event listeners
 //open and close the storePage
-storeButton.addEventListener("click", (evt) => {
+menuButton.addEventListener("click", (evt) => {
   //hide the store
-  if (mainPage.style.display == 'none') {
-    background.style.display = 'inline';
-    storePage.style.display = 'none';
-    mainPage.style.display = 'inline';
+  if (menuPage.style.display == 'none') {
+    menuOpen = true;
+    //background.style.display = 'none';
+    mainPage.style.display = 'none';
+    menuPage.style.display = 'inline';
+
   }
   //show the store
   else {
-    background.style.display = 'none';
-    storePage.style.display = 'inline';
-    mainPage.style.display = 'none';
+    menuOpen = false;
+    menuPage.style.display = 'none';
+    //background.style.display = 'inline';
+    mainPage.style.display = 'inline';
   }
 })
 //button event.
@@ -226,7 +230,7 @@ clock.addEventListener("tick", (evt) => {
     mainPage.style.display = 'none';
     startPage.style.display = 'inline';
     storePage.style.display = 'none';
-    storeButton.style.display = 'none';
+    menuButton.style.display = 'none';
     return;
   }
 
@@ -246,9 +250,12 @@ clock.addEventListener("tick", (evt) => {
 
   //if we reach this point the game is in progress as either an egg or creature.
 
-  //hide the start page and show the main Page.
-  mainPage.style.display = 'inline';
-  startPage.style.display = 'none';
+  if (!menuOpen) {
+    //hide the start page and show the main Page.
+    mainPage.style.display = 'inline';
+    startPage.style.display = 'none';
+  }
+
 
   //EGG LOGIC ---------------------------------------------------
   if (saveState.data.egg == 0) {
@@ -336,17 +343,20 @@ clock.addEventListener("tick", (evt) => {
   //EGG LOGIC END ---------------------------------------------------
 
   else {
-    storeButton.style.display = 'inline';
-    healthBar.style.display = 'inline';
-    hungerBar.style.display = 'inline';
-    borderBarHealth.style.display = 'inline';
-    borderBarHunger.style.display = 'inline';
-    cookieLabel.style.display = 'block';
-    feedPetButton.style.display = 'inline';
-    hungerLabel.text = "Hunger:";
-    healthLabel.text = "Health:";
-    walletLabel.text = "Wallet:" + saveState.data.wallet;
-    cookieLabel.text = "Cookies:" + saveState.data.cookies;
+    if (!menuOpen) {
+      menuButton.style.display = 'inline';
+      healthBar.style.display = 'inline';
+      hungerBar.style.display = 'inline';
+      borderBarHealth.style.display = 'inline';
+      borderBarHunger.style.display = 'inline';
+      cookieLabel.style.display = 'block';
+      feedPetButton.style.display = 'inline';
+      hungerLabel.text = "Hunger:";
+      healthLabel.text = "Health:";
+      walletLabel.text = "Wallet:" + saveState.data.wallet;
+      cookieLabel.text = "Cookies:" + saveState.data.cookies;
+    }
+
 
     // represents how many minutes have passed since the last save.
     lastSaveTime = checkDate(new Date(saveState.data.saveTimer)) * -1;
@@ -627,6 +637,9 @@ function checkDate(date) {
 }
 function swapImageAnimator() {
 
+  if (menuOpen) {
+    return;
+  }
   switch (saveState.data.currentAnimation) {
 
     case 'egg2':
