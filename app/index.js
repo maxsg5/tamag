@@ -46,6 +46,7 @@ let healthBar = document.getElementById('healthBar');
 let hungerBar = document.getElementById('hungerBar');
 let borderBarHealth = document.getElementById('borderBarHealth');
 let borderBarHunger = document.getElementById('borderBarHunger');
+let backButton = document.getElementById('backBtn');
 healthBar.style.display = 'none';
 hungerBar.style.display = 'none';
 borderBarHealth.style.display = 'none';
@@ -56,6 +57,7 @@ let storePage = document.getElementById('page3');
 let mainPage = document.getElementById('page2');
 let startPage = document.getElementById('page1');
 let menuPage = document.getElementById('menuPage');
+let mainMenu = document.getElementById('mainMenu');
 
 
 //page2.style.display = 'none';
@@ -150,20 +152,27 @@ setInterval(swapImageAnimator, animationSpeed);
 //event listeners
 //open and close the storePage
 menuButton.addEventListener("click", (evt) => {
-  //hide the store
-  if (menuPage.style.display == 'none') {
-    menuOpen = true;
-    //background.style.display = 'none';
-    mainPage.style.display = 'none';
-    menuPage.style.display = 'inline';
+  menuButton.style.display = 'none';
+  menuOpen = true;
+  //background.style.display = 'none';
+  mainPage.style.display = 'none';
+  menuPage.style.display = 'inline';
+})
 
-  }
-  //show the store
-  else {
+//back button inside the menu page.
+backButton.addEventListener("click", (evt) => {
+  if (mainMenu.style.display == 'inline') {
     menuOpen = false;
     menuPage.style.display = 'none';
     //background.style.display = 'inline';
     mainPage.style.display = 'inline';
+    menuButton.style.display = 'inline';
+
+
+  }
+  
+  else {
+    
   }
 })
 //button event.

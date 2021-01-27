@@ -40,4 +40,9 @@
     fill: darkgray;
     text-buffer: "BACK";
   }
+
+  #mainMenu{
+    display: inline;
+
+  }
   
