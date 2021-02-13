@@ -57,12 +57,21 @@ let storePage = document.getElementById('page3');
 let mainPage = document.getElementById('page2');
 let startPage = document.getElementById('page1');
 let menuPage = document.getElementById('menuPage');
+let statsPage = document.getElementById('statsPage');
 let mainMenu = document.getElementById('mainMenu');
+let menuBtn1 = document.getElementById('feedPetBtn');
+let menuBtn2 = document.getElementById('storeBtn');
+let menuBtn3 = document.getElementById('btn2');
+let menuBtn4 = document.getElementById('btn3');
+let menuBtn5 = document.getElementById('btn4');
+let menuBtn6 = document.getElementById('btn5');
+
 
 
 //page2.style.display = 'none';
 //initialize UI elements and fitbit components
 storePage.style.display = 'none';
+statsPage.style.display = 'none';
 devButton3.style.display = 'none';
 
 
