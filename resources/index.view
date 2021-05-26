@@ -97,9 +97,8 @@
   <use id="button-5" href="#icon-button" class="small-button application-fill " />
   <use id="button-6" href="#icon-button" class="small-button application-fill " />
   <use id="button-7" href="#icon-button" class="small-button application-fill " />
-
-</svg>
-
-<svg id="statsPage">
+  <svg id="statsPage">
   
+  </svg>
 </svg>
+
